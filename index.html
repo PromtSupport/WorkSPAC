@@ -640,11 +640,11 @@
                   
                   <nav className="space-y-3 flex-1">
                     {[
-                      { id: 'storage', icon: 'folder', text: '01 Хранилище' },
-                      { id: 'tasks', icon: 'layers', text: '02 Задачи' },
-                      { id: 'calendar', icon: 'calendar', text: '03 Хронос' },
-                      { id: 'metrics', icon: 'trending-up', text: '04 Метрики' },
-                      { id: 'safe', icon: 'key', text: '05 Сейф' }
+                      { id: 'storage', icon: 'folder', text: 'Хранилище' },
+                      { id: 'tasks', icon: 'layers', text: 'Задачи' },
+                      { id: 'calendar', icon: 'calendar', text: 'Календарь' },
+                      { id: 'metrics', icon: 'trending-up', text: 'Метрики' },
+                      { id: 'safe', icon: 'key', text: 'Сейф' }
                     ].map(tab => (
                       <button
                         key={tab.id}
@@ -746,7 +746,7 @@
                 <header className="glowing-neon-container p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
                     <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-purple-400 font-bold flex items-center gap-1.5">
-                      🛡️ PROMT Support Панель управления
+                       PROMT Support Панель управления
                     </span>
                     <h2 className="text-xl sm:text-2xl font-serif tracking-wider font-extralight text-stone-100 uppercase mt-1">
                       {activeTab === 'storage' && "Хранилище"}
