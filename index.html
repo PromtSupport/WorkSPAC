@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROMT Support</title>
-    <!-- Premium Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;700;900&family=Inter:wght@100;200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React and ReactDOM CDN -->
@@ -16,126 +16,482 @@
     <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
     <style>
         body {
-            background-color: #020202;
+            background-color: #000000;
             background-image: 
-                radial-gradient(at 50% 50%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
-                radial-gradient(at 0% 0%, rgba(220, 38, 38, 0.03) 0px, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.003) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.003) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
-            font-family: 'Space Grotesk', sans-serif;
-            color: #f5f5f5;
+                radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.02) 0%, transparent 60%),
+                radial-gradient(circle at 100% 100%, rgba(220, 38, 38, 0.01) 0s, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.0005) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.0005) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 80px 80px, 80px 80px;
+            font-family: 'Inter', sans-serif;
+            color: #c5c5ca;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        .gothic-header {
+        .gothic-title {
             font-family: 'Cinzel', serif;
-            letter-spacing: 0.25em;
         }
-        /* Animated scanline mimicking bunker monitor */
-        .scanline {
-            width: 100%;
-            height: 100px;
-            background: linear-gradient(0deg, rgba(168, 85, 247, 0.02) 0%, transparent 100%);
-            position: absolute;
-            animation: scan 12s linear infinite;
-            pointer-events: none;
-            z-index: 1;
+        .luxury-accent {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
         }
-        @keyframes scan {
-            0% { top: -100px; }
-            100% { top: 100%; }
-        }
-        /* Premium glowing structural corners */
-        .corner-frame {
+        /* iOS-inspired Squircle Matte Dark Container */
+        .ios-matte-card {
+            background: rgba(4, 4, 4, 0.95);
+            border: 0.5px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(50px);
+            border-radius: 24px;
             position: relative;
-            border: 1px solid rgba(139, 92, 246, 0.15);
-            background: rgba(5, 5, 5, 0.9);
-            backdrop-filter: blur(16px);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .corner-frame::before, .corner-frame::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-color: rgba(168, 85, 247, 0.6);
-            border-style: solid;
-            pointer-events: none;
+        .ios-matte-card:hover {
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 50px 120px rgba(0, 0, 0, 1);
         }
-        .corner-frame::before {
-            top: -1px;
-            left: -1px;
-            border-width: 1.5px 0 0 1.5px;
+        /* Mono Interactive Button */
+        .ios-btn-mono {
+            background: #ffffff;
+            color: #000000;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            border-radius: 14px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .corner-frame::after {
-            bottom: -1px;
-            right: -1px;
-            border-width: 0 1.5px 1.5px 0;
+        .ios-btn-mono:hover {
+            background: #d4d4d8;
+            transform: translateY(-1px);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.12);
         }
-        .corner-frame:hover {
-            border-color: rgba(168, 85, 247, 0.4);
-            box-shadow: 0 0 35px rgba(168, 85, 247, 0.2);
-        }
-        /* Custom scrollbar */
+        /* Custom slim premium scrollbar */
         ::-webkit-scrollbar {
-            width: 3px;
-            height: 3px;
+            width: 2px;
+            height: 2px;
         }
         ::-webkit-scrollbar-track {
-            background: #020202;
+            background: #000000;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(168, 85, 247, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(168, 85, 247, 0.6);
+            background: rgba(220, 38, 38, 0.35);
         }
     </style>
 </head>
-<body class="min-h-screen text-gray-200 selection:bg-purple-950 selection:text-purple-300 relative">
-    <div class="scanline"></div>
+<body class="min-h-screen text-stone-300 relative selection:bg-stone-900 selection:text-white">
     <div id="root" class="relative z-10"></div>
 
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // Secure Operator Sessions
-        const operators = {
+        // Secure operator registry (Punctuation-free values)
+        const operatorRegistry = {
             asya: "Qaswer",
             sasha: "p1tln"
         };
 
-        // Fallback public GunDB nodes for distributed serverless sync
-        const gunPeers = [
+        // Decentralized replication nodes
+        const gunEndpoints = [
             'https://gun-manhattan.herokuapp.com/gun',
             'https://gundb.herokuapp.com/gun'
         ];
-        const gunInstance = Gun(gunPeers);
-        // Shared namespace channel for real-time synchronization between asya and sasha
-        const dbNode = gunInstance.get('promt_support_workspace_production_v15');
+        const gunConnection = Gun(gunEndpoints);
+        // Correct global naming to match internal React state references
+        const dbNode = gunConnection.get('promt_support_absolute_ios_v23');
+
+        // Premium P&S Monogram Emblem SVG Component
+        function MonogramBrandLogo({ className = "w-16 h-16" }) {
+            return (
+                <svg className={className} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="95" stroke="rgba(255,255,255,0.02)" strokeWidth="1" />
+                    <circle cx="100" cy="100" r="90" stroke="rgba(255,255,255,0.01)" strokeWidth="0.5" />
+                    {/* Interwoven Calligraphic Paths of P and S */}
+                    <path d="M65 45 H125 C145 45 145 80 125 80 H65 V155" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M72 53 H120 C132 53 132 72 120 72 H72 V147" stroke="rgba(255,255,255,0.15)" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M110 110 C130 110 145 117 145 130 C145 145 120 155 95 155 C72 155 62 145 62 140" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M115 117 C130 117 137 123 137 130 C137 140 117 147 97 147 C80 147 70 140 70 137" stroke="#dc2626" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+                    <circle cx="125" cy="80" r="2.5" fill="#dc2626" />
+                    <circle cx="65" cy="155" r="2.5" fill="#ffffff" />
+                    <circle cx="65" cy="45" r="2.5" fill="#ffffff" />
+                    <circle cx="62" cy="140" r="2.5" fill="#dc2626" />
+                </svg>
+            );
+        }
+
+        // Highly Detailed 3D Gothic Sacred Knot Canvas Animation
+        function GothicNeuroKnotCanvas({ width = 300, height = 300 }) {
+            const canvasRef = useRef(null);
+            const mouseCoord = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
+
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                let frameId;
+                let rotateX = 0.002;
+                let rotateY = 0.003;
+
+                // Mathematical definition of a complex torus knot (Gothic Knotwork)
+                const generateKnotPoints = () => {
+                    const temp = [];
+                    const steps = 180;
+                    const p = 3; // Windings
+                    const q = 7; // Windings
+                    const radius = 55;
+
+                    for (let i = 0; i < steps; i++) {
+                        const phi = (i * 2 * Math.PI) / steps;
+                        const r = radius * (2 + Math.sin(q * phi));
+                        const x = r * Math.cos(p * phi);
+                        const y = r * Math.sin(p * phi);
+                        const z = radius * Math.cos(q * phi);
+                        temp.push({ x, y, z });
+                    }
+                    return temp;
+                };
+
+                const knotPoints = generateKnotPoints();
+
+                const handleMouseMove = (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    mouseCoord.current.targetX = (e.clientX - rect.left - width / 2) * 0.0012;
+                    mouseCoord.current.targetY = (e.clientY - rect.top - height / 2) * 0.0012;
+                };
+
+                window.addEventListener('mousemove', handleMouseMove);
+
+                const animate = () => {
+                    ctx.clearRect(0, 0, width, height);
+                    
+                    mouseCoord.current.x += (mouseCoord.current.targetX - mouseCoord.current.x) * 0.05;
+                    mouseCoord.current.y += (mouseCoord.current.targetY - mouseCoord.current.y) * 0.05;
+
+                    const curAngleX = rotateX + mouseCoord.current.y;
+                    const curAngleY = rotateY + mouseCoord.current.x;
+
+                    const cx = width / 2;
+                    const cy = height / 2;
+
+                    const cosX = Math.cos(curAngleX);
+                    const sinX = Math.sin(curAngleX);
+                    const cosY = Math.cos(curAngleY);
+                    const sinY = Math.sin(curAngleY);
+
+                    const projected = knotPoints.map(p => {
+                        // Rotation Y
+                        let x1 = p.x * cosY - p.z * sinY;
+                        let z1 = p.x * sinY + p.z * cosY;
+                        
+                        // Rotation X
+                        let y2 = p.y * cosX - z1 * sinX;
+                        let z2 = p.y * sinX + z1 * cosX;
+
+                        const depth = 300 / (300 + z2);
+                        return {
+                            x: cx + x1 * 0.5 * depth,
+                            y: cy + y2 * 0.5 * depth,
+                            z: z2
+                        };
+                    });
+
+                    // Draw intricate gothic knot paths with gradients
+                    ctx.lineWidth = 0.5;
+                    for (let i = 0; i < projected.length; i++) {
+                        const p1 = projected[i];
+                        const p2 = projected[(i + 1) % projected.length];
+                        const alpha = Math.max(0.08, (120 - p1.z) / 240);
+
+                        // Double layering lines for high detail
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.15})`;
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+
+                        // Interlinking neural grid lines to center
+                        if (i % 6 === 0) {
+                            ctx.strokeStyle = `rgba(220, 38, 38, ${alpha * 0.25})`;
+                            ctx.beginPath();
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(cx, cy);
+                            ctx.stroke();
+                        }
+                    }
+
+                    // Draw glowing nodal pulses moving along the curves
+                    projected.forEach((p, index) => {
+                        if (index % 12 === 0) {
+                            const alpha = Math.max(0.1, (100 - p.z) / 200);
+                            ctx.fillStyle = `rgba(220, 38, 38, ${alpha})`;
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, 2, 0, 2 * Math.PI);
+                            ctx.fill();
+
+                            ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.8})`;
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, 0.8, 0, 2 * Math.PI);
+                            ctx.fill();
+                        }
+                    });
+
+                    rotateX += 0.0015;
+                    rotateY += 0.002;
+
+                    frameId = requestAnimationFrame(animate);
+                };
+
+                animate();
+
+                return () => {
+                    cancelAnimationFrame(frameId);
+                    window.removeEventListener('mousemove', handleMouseMove);
+                };
+            }, [width, height]);
+
+            return <canvas ref={canvasRef} width={width} height={height} className="block select-none" />;
+        }
+
+        // Premium High-Fidelity Signal Connection Map (Completely Redesigned Canvas)
+        function HighFidelitySignalMap() {
+            const canvasRef = useRef(null);
+            const [hovered, setHovered] = useState(false);
+
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                let animationId;
+                let t = 0;
+
+                // Core coordinates for nodes
+                const leftNode = { x: 80, y: 70, radius: 24, rotation: 0 };
+                const rightNode = { x: canvas.width - 80, y: 70, radius: 24, rotation: 0 };
+
+                // Build particle system for active data transmission along frequency wave
+                const particles = [];
+                for (let i = 0; i < 15; i++) {
+                    particles.push({
+                        progress: Math.random(),
+                        speed: 0.003 + Math.random() * 0.004,
+                        size: 1 + Math.random() * 2
+                    });
+                }
+
+                const drawWaveSegment = (startX, endX, time, ampMultiplier) => {
+                    ctx.beginPath();
+                    for (let x = startX; x <= endX; x++) {
+                        // Complex audio/digital frequency signal representation (multi-harmonic)
+                        const norm = (x - startX) / (endX - startX);
+                        const envelope = Math.sin(norm * Math.PI); // Smooth decay at boundaries
+                        
+                        // Overlapping high-frequency signals inspired by PromtSupport_avatar_Вариант_2_(Цифровой_сигнал)
+                        const f1 = Math.sin(x * 0.08 - time * 0.1) * 12;
+                        const f2 = Math.cos(x * 0.22 + time * 0.15) * 6;
+                        const f3 = Math.sin(x * 0.45 - time * 0.3) * (hovered ? 5 : 2); // Chaotic noise peaks
+
+                        const y = 70 + (f1 + f2 + f3) * envelope * ampMultiplier;
+                        if (x === startX) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.stroke();
+                };
+
+                const render = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // 1. Digital Grid Overlay (Fine-grid tech aesthetic)
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.015)';
+                    ctx.lineWidth = 0.5;
+                    const step = 20;
+                    for (let x = 0; x < canvas.width; x += step) {
+                        ctx.beginPath();
+                        ctx.moveTo(x, 0);
+                        ctx.lineTo(x, canvas.height);
+                        ctx.stroke();
+                    }
+                    for (let y = 0; y < canvas.height; y += step) {
+                        ctx.beginPath();
+                        ctx.moveTo(0, y);
+                        ctx.lineTo(canvas.width, y);
+                        ctx.stroke();
+                    }
+
+                    // 2. Draw active frequency waves (Gothic Cyber Signal lines)
+                    const waveStartX = leftNode.x + leftNode.radius;
+                    const waveEndX = rightNode.x - rightNode.radius;
+
+                    // Layer A: Low intensity dark ruby background signal
+                    ctx.strokeStyle = 'rgba(220, 38, 38, 0.1)';
+                    ctx.lineWidth = 0.5;
+                    drawWaveSegment(waveStartX, waveEndX, t * 0.5, 1.4);
+
+                    // Layer B: Main active ruby transmission wave
+                    ctx.strokeStyle = hovered ? 'rgba(220, 38, 38, 0.7)' : 'rgba(220, 38, 38, 0.35)';
+                    ctx.lineWidth = 1;
+                    drawWaveSegment(waveStartX, waveEndX, t, 1.0);
+
+                    // Layer C: High frequency white sync indicator
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+                    ctx.lineWidth = 0.5;
+                    drawWaveSegment(waveStartX, waveEndX, t * 1.5, 0.6);
+
+                    // 3. Render floating data particles along the active wave path
+                    particles.forEach(p => {
+                        p.progress += p.speed;
+                        if (p.progress > 1) {
+                            p.progress = 0;
+                            p.speed = 0.003 + Math.random() * 0.004;
+                        }
+
+                        const targetX = waveStartX + p.progress * (waveEndX - waveStartX);
+                        const norm = p.progress;
+                        const envelope = Math.sin(norm * Math.PI);
+                        const f1 = Math.sin(targetX * 0.08 - t * 0.1) * 12;
+                        const f2 = Math.cos(targetX * 0.22 + t * 0.15) * 6;
+                        const targetY = 70 + (f1 + f2) * envelope;
+
+                        // Render glowing particle core
+                        ctx.fillStyle = hovered ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.4)';
+                        ctx.beginPath();
+                        ctx.arc(targetX, targetY, p.size, 0, 2 * Math.PI);
+                        ctx.fill();
+
+                        // Particle outer ambient glow
+                        if (hovered) {
+                            ctx.fillStyle = 'rgba(220, 38, 38, 0.25)';
+                            ctx.beginPath();
+                            ctx.arc(targetX, targetY, p.size * 2.5, 0, 2 * Math.PI);
+                            ctx.fill();
+                        }
+                    });
+
+                    // 4. Left Node: Rotating Neuro-processor design (PromtSupport_avatar_Вариант_1_(Нейроузел))
+                    ctx.save();
+                    ctx.translate(leftNode.x, leftNode.y);
+                    leftNode.rotation += 0.005;
+                    ctx.rotate(leftNode.rotation);
+                    
+                    // Outward neural circuit tracks
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+                    ctx.lineWidth = 1;
+                    for (let i = 0; i < 4; i++) {
+                        ctx.rotate(Math.PI / 2);
+                        ctx.beginPath();
+                        ctx.moveTo(12, 0);
+                        ctx.lineTo(24, 0);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.arc(24, 0, 2, 0, 2 * Math.PI);
+                        ctx.stroke();
+                    }
+
+                    // Solid obisidian core plate
+                    ctx.fillStyle = '#060606';
+                    ctx.strokeStyle = 'rgba(220, 38, 38, 0.2)';
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, leftNode.radius - 8, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    // Central glowing status indicator
+                    ctx.fillStyle = 'rgba(220, 38, 38, 0.85)';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 4 + Math.sin(t * 0.08) * 1.5, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.restore();
+
+                    // 5. Right Node: Rotating Sacred Diamond design (PromtSupport_logo_Вариант_2_(Монограмма_P&S))
+                    ctx.save();
+                    ctx.translate(rightNode.x, rightNode.y);
+                    rightNode.rotation -= 0.008;
+                    ctx.rotate(rightNode.rotation);
+
+                    // Outer orbit circuit loop
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, rightNode.radius, 0, 2 * Math.PI);
+                    ctx.stroke();
+
+                    // Rotating wireframe diamond
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(0, -14);
+                    ctx.lineTo(10, 0);
+                    ctx.lineTo(0, 14);
+                    ctx.lineTo(-10, 0);
+                    ctx.closePath();
+                    ctx.stroke();
+
+                    ctx.strokeStyle = 'rgba(220, 38, 38, 0.4)';
+                    ctx.beginPath();
+                    ctx.moveTo(-10, 0);
+                    ctx.lineTo(10, 0);
+                    ctx.moveTo(0, -14);
+                    ctx.lineTo(0, 14);
+                    ctx.stroke();
+
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 2, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.restore();
+
+                    // 6. Labels and statuses inside the map
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+                    ctx.font = '8px monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('ПОТОК СИНХРОНИЗАЦИИ АКТИВЕН', canvas.width / 2, 115);
+
+                    t += 1;
+                    animationId = requestAnimationFrame(render);
+                };
+
+                render();
+
+                return () => cancelAnimationFrame(animationId);
+            }, [hovered]);
+
+            return (
+                <div 
+                    className="w-full h-36 border border-stone-900/50 rounded-xl relative overflow-hidden bg-[#020202]"
+                    onMouseEnter={() => setHovered(true)}
+                    onMouseLeave={() => setHovered(false)}
+                >
+                    <canvas 
+                        ref={canvasRef} 
+                        width={680} 
+                        height={144} 
+                        className="w-full h-full block" 
+                    />
+                </div>
+            );
+        }
 
         function App() {
-            // Authentication & Tab Navigation States
             const [isAuthenticated, setIsAuthenticated] = useState(false);
             const [currentUser, setCurrentUser] = useState("");
             const [loginInput, setLoginInput] = useState("");
             const [passwordInput, setPasswordInput] = useState("");
             const [authError, setAuthError] = useState("");
             const [activeTab, setActiveTab] = useState("storage");
-            const [syncIndicator, setSyncIndicator] = useState("Синхронизировано");
+            const [syncIndicator, setSyncIndicator] = useState("Активен");
 
-            // Global Security Notification State
+            // Notification message state
             const [notification, setNotification] = useState("");
             const triggerNotification = (message) => {
                 setNotification(message);
-                setTimeout(() => setNotification(""), 4000);
+                setTimeout(() => setNotification(""), 4500);
             };
 
-            // Live Operation Terminal Logs (No punctuation)
+            // Operational logs system (no punctuation)
             const [operationLogs, setOperationLogs] = useState([
-                { id: 1, time: "09 30 15", event: "Система PROMT Support запущена в штатном режиме" },
-                { id: 2, time: "09 30 16", event: "Каналы передачи данных зашифрованы протоколом сквозного обмена" },
-                { id: 3, time: "09 30 18", event: "Ожидание авторизации доверенных операторов" }
+                { id: 1, time: "07 02 01", event: "Запущена сессия управления PROMT Support" },
+                { id: 2, time: "07 02 02", event: "Шифрование каналов сквозного обмена активно" },
+                { id: 3, time: "07 02 04", event: "Ожидание верификации доверенных пользователей" }
             ]);
 
             const appendLog = (eventText) => {
@@ -146,20 +502,48 @@
                     time: timeString,
                     event: eventText
                 };
-                setOperationLogs(prev => [newLog, ...prev].slice(0, 15));
+                setOperationLogs(prev => [newLog, ...prev].slice(0, 8));
             };
 
-            // Core Database States
+            // Databases states
             const [folders, setFolders] = useState([]);
             const [files, setFiles] = useState([]);
             const [tasks, setTasks] = useState([]);
             const [events, setEvents] = useState([]);
             const [safe, setSafe] = useState([]);
 
-            // Ref to prevent feedback loops during P2P propagation
-            const isLocalUpdateRef = useRef(false);
+            // Default premium prefilled values
+            const prefillData = () => {
+                const defaultFolders = [
+                    
+        
+                ];
+                const defaultFiles = [
+                   
+                ];
+                const defaultTasks = [
+                    ];
+                const defaultEvents = [
+            
+                ];
+                const defaultSafe = [
+                 
+                ];
 
-            // 1. Initial Local Restore on Boot
+                setFolders(defaultFolders);
+                setFiles(defaultFiles);
+                setTasks(defaultTasks);
+                setEvents(defaultEvents);
+                setSafe(defaultSafe);
+
+                localStorage.setItem("promt_folders", JSON.stringify(defaultFolders));
+                localStorage.setItem("promt_files", JSON.stringify(defaultFiles));
+                localStorage.setItem("promt_tasks", JSON.stringify(defaultTasks));
+                localStorage.setItem("promt_events", JSON.stringify(defaultEvents));
+                localStorage.setItem("promt_safe", JSON.stringify(defaultSafe));
+            };
+
+            // Hydrate state from localStorage
             useEffect(() => {
                 const savedUser = localStorage.getItem("promt_auth_user");
                 if (savedUser) {
@@ -174,35 +558,36 @@
                     const localEvents = localStorage.getItem("promt_events");
                     const localSafe = localStorage.getItem("promt_safe");
 
-                    if (localFolders) setFolders(JSON.parse(localFolders));
+                    if (localFolders && JSON.parse(localFolders).length > 0) {
+                        setFolders(JSON.parse(localFolders));
+                    } else {
+                        prefillData();
+                    }
+
                     if (localFiles) setFiles(JSON.parse(localFiles));
                     if (localTasks) setTasks(JSON.parse(localTasks));
                     if (localEvents) setEvents(JSON.parse(localEvents));
                     if (localSafe) setSafe(JSON.parse(localSafe));
                 } catch (e) {
-                    appendLog("Ошибка при чтении зашифрованной базы данных устройства");
+                    appendLog("Сбой дешифрования локального хранилища устройства");
                 }
             }, []);
 
-            // 2. Real-time P2P Sync Engine (GunDB Listener)
+            // Handle P2P GunDB synchronization updates
             useEffect(() => {
                 if (!isAuthenticated || !currentUser) return;
 
-                appendLog("Установление защищенного P2P соединения");
-                setSyncIndicator("Соединение");
+                appendLog("Установление шифрованного P2P контура");
+                setSyncIndicator("Синхронизация");
 
-                // Listen to central shared cloud workspace
-                dbNode.get('state_payload').on((dataStr) => {
+                dbNode.get('state_payload_v22').on((dataStr) => {
                     if (!dataStr) return;
                     try {
                         const parsed = JSON.parse(dataStr);
-                        
-                        // Ignore updates sent by ourselves to prevent loops
                         if (parsed.sender === currentUser) return;
 
                         setSyncIndicator("Обновление");
 
-                        // Update local states & localStorage
                         if (parsed.folders) {
                             setFolders(parsed.folders);
                             localStorage.setItem("promt_folders", JSON.stringify(parsed.folders));
@@ -224,15 +609,15 @@
                             localStorage.setItem("promt_safe", JSON.stringify(parsed.safe));
                         }
 
-                        appendLog(`Принято синхронное обновление базы данных от оператора ${parsed.sender}`);
-                        setTimeout(() => setSyncIndicator("Синхронизировано"), 1000);
+                        appendLog(`Принято защищенное обновление от пользователя ${parsed.sender}`);
+                        setTimeout(() => setSyncIndicator("Защищено"), 1500);
                     } catch (e) {
-                        appendLog("Ошибка разбора входящего пакета данных");
+                        appendLog("Ошибка верификации входящего пакета данных");
                     }
                 });
             }, [isAuthenticated, currentUser]);
 
-            // Helper to broadcast changes to the other operator
+            // Broadcast states across P2P channels
             const broadcastState = (updatedFolders, updatedFiles, updatedTasks, updatedEvents, updatedSafe) => {
                 const payload = {
                     sender: currentUser,
@@ -245,11 +630,10 @@
                 };
                 
                 setSyncIndicator("Отправка");
-                dbNode.get('state_payload').put(JSON.stringify(payload));
-                setTimeout(() => setSyncIndicator("Синхронизировано"), 1000);
+                dbNode.get('state_payload_v22').put(JSON.stringify(payload));
+                setTimeout(() => setSyncIndicator("Защищено"), 1500);
             };
 
-            // Local updates triggers that trigger immediate cloud sync
             const saveFolders = (newFolders) => {
                 setFolders(newFolders);
                 localStorage.setItem("promt_folders", JSON.stringify(newFolders));
@@ -280,36 +664,36 @@
                 broadcastState(null, null, null, null, newSafe);
             };
 
-            // Authenticating Operator Session
+            // Authentication processing
             const handleAuthSubmit = (e) => {
                 e.preventDefault();
                 setAuthError("");
-                const checkLogin = loginInput.trim().toLowerCase();
-                if (operators[checkLogin] && operators[checkLogin] === passwordInput) {
-                    setCurrentUser(checkLogin);
+                const username = loginInput.trim().toLowerCase();
+                if (operatorRegistry[username] && operatorRegistry[username] === passwordInput) {
+                    setCurrentUser(username);
                     setIsAuthenticated(true);
-                    localStorage.setItem("promt_auth_user", checkLogin);
-                    appendLog(`Оператор ${checkLogin} успешно завершил процесс идентификации личности`);
-                    triggerNotification("Добро пожаловать в бункер управления");
+                    localStorage.setItem("promt_auth_user", username);
+                    appendLog(`Пользователь ${username} вошел в рабочую среду`);
+                    triggerNotification("Успешное подключение к каналу связи");
                 } else {
-                    setAuthError("Неверный ключ оператора или секретный шифр безопасности");
-                    appendLog(`Зафиксирована попытка несанкционированного доступа с именем ${checkLogin}`);
+                    setAuthError("Доступ заблокирован неверный ключ оператора или пароль доступа");
+                    appendLog(`Отказ в доступе для имени ${username}`);
                 }
             };
 
-            // Log Out Operator
+            // Terminate connection
             const handleLogout = () => {
-                appendLog(`Оператор ${currentUser} разорвал защищенное соединение`);
+                appendLog(`Пользователь ${currentUser} завершил активную сессию`);
                 setIsAuthenticated(false);
                 setCurrentUser("");
                 setLoginInput("");
                 setPasswordInput("");
                 localStorage.removeItem("promt_auth_user");
-                triggerNotification("Сессия полностью закрыта");
+                triggerNotification("Сеанс связи деактивирован");
             };
 
             // ------------------------------------------
-            // MODULE: STORAGE (KNOWLEDGE BASE)
+            // MODULE: STORAGE
             // ------------------------------------------
             const [currentFolderId, setCurrentFolderId] = useState(null);
             const [isAddFolderOpen, setIsAddFolderOpen] = useState(false);
@@ -319,7 +703,6 @@
             const [isDragging, setIsDragging] = useState(false);
             const fileInputRef = useRef(null);
 
-            // Create Directory Node
             const handleCreateFolder = (e) => {
                 e.preventDefault();
                 const name = newFolderName.trim();
@@ -332,11 +715,10 @@
                 saveFolders([...folders, newFolder]);
                 setNewFolderName("");
                 setIsAddFolderOpen(false);
-                appendLog(`Создан каталог архива ${name}`);
-                triggerNotification("Каталог успешно создан");
+                appendLog(`Создана папка ${name}`);
+                triggerNotification("Каталог создан");
             };
 
-            // Delete Directory Recursively
             const deleteFolderRecursively = (folderId, e) => {
                 if (e) e.stopPropagation();
                 let foldersToRemove = [folderId];
@@ -353,11 +735,10 @@
                 const updatedFiles = files.filter(f => !foldersToRemove.includes(f.parentId) && f.parentId !== folderId);
                 saveFolders(updatedFolders);
                 saveFiles(updatedFiles);
-                appendLog(`Удален каталог с идентификатором ${folderId} и все вложенные элементы`);
-                triggerNotification("Каталог полностью очищен");
+                appendLog(`Удален каталог ${folderId}`);
+                triggerNotification("Раздел очищен");
             };
 
-            // Upload Local Files
             const handleFileDropUpload = async (fileList) => {
                 const newFiles = [...files];
                 for (let i = 0; i < fileList.length; i++) {
@@ -380,13 +761,12 @@
                         type: droppedFile.type || "application/octet-stream",
                         content: textContent
                     });
-                    appendLog(`Загружен файл ${droppedFile.name}`);
+                    appendLog(`Импортирован файл ${droppedFile.name}`);
                 }
                 saveFiles(newFiles);
-                triggerNotification("Файлы импортированы в облако");
+                triggerNotification("Документы сохранены в облаке");
             };
 
-            // Recursive Directory & File Import on Drop
             const triggerFolderAndFileExtraction = async (item, parentId) => {
                 if (item.isFile) {
                     const fileObj = await new Promise((resolve) => item.file(resolve));
@@ -408,7 +788,6 @@
                     const existingParsed = JSON.parse(existingRaw);
                     existingParsed.push(registeredFile);
                     saveFiles(existingParsed);
-                    appendLog(`Импортирован файл ${item.name} в структуре каталогов`);
                 } else if (item.isDirectory) {
                     const subFolderId = "folder_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5);
                     const registeredFolder = {
@@ -420,7 +799,6 @@
                     const existingFoldersParsed = JSON.parse(existingFoldersRaw);
                     existingFoldersParsed.push(registeredFolder);
                     saveFolders(existingFoldersParsed);
-                    appendLog(`Импортирован каталог ${item.name}`);
 
                     const dirReader = item.createReader();
                     const subEntries = await new Promise((resolve) => dirReader.readEntries(resolve));
@@ -453,27 +831,25 @@
                         }
                     }
                 }
-                triggerNotification("Структуры каталогов импортированы");
+                triggerNotification("Каталоги импортированы");
             };
 
-            // Delete Individual File Node
             const deleteIndividualFile = (fileId, name, e) => {
                 if (e) e.stopPropagation();
                 const filtered = files.filter(f => f.id !== fileId);
                 saveFiles(filtered);
-                appendLog(`Исключен файл ${name} из реестра данных`);
+                appendLog(`Удален файл ${name}`);
                 triggerNotification("Файл удален");
             };
 
-            // Editor Save Logic
             const handleSaveEditedContent = () => {
                 if (!editingFile) return;
                 const updated = files.map(f => f.id === editingFile.id ? { ...f, content: editingFileContent } : f);
                 saveFiles(updated);
                 setEditingFile(null);
                 setEditingFileContent("");
-                appendLog(`Сохранены внесенные правки в текстовый файл ${editingFile.name}`);
-                triggerNotification("Изменения внесены успешно");
+                appendLog(`Сохранен текстовый документ ${editingFile.name}`);
+                triggerNotification("Изменения записаны");
             };
 
             const getBreadcrumbs = () => {
@@ -492,7 +868,7 @@
             };
 
             // ------------------------------------------
-            // MODULE: TASKS (KANBAN)
+            // MODULE: KANBAN WORKFLOW
             // ------------------------------------------
             const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
             const [taskTitle, setTaskTitle] = useState("");
@@ -500,7 +876,6 @@
             const [taskAssignee, setTaskAssignee] = useState("asya");
             const [taskDeadline, setTaskDeadline] = useState("");
 
-            // Create Task Node
             const handleCreateTaskSubmit = (e) => {
                 e.preventDefault();
                 const title = taskTitle.trim();
@@ -519,31 +894,29 @@
                 setTaskAssignee("asya");
                 setTaskDeadline("");
                 setIsAddTaskOpen(false);
-                appendLog(`Зарегистрирована рабочая задача ${title}`);
-                triggerNotification("Задача размещена на доске");
+                appendLog(`Зарегистрирована задача ${title}`);
+                triggerNotification("Задача занесена на доску");
             };
 
-            // Update Task Status
             const changeTaskStatus = (taskId, nextStatus) => {
                 const updated = tasks.map(t => t.id === taskId ? { ...t, status: nextStatus } : t);
                 saveTasks(updated);
-                appendLog(`Статус рабочей задачи ${taskId} изменен на ${nextStatus}`);
-                triggerNotification("Статус задачи обновлен");
+                appendLog(`Смена этапа выполнения задачи ${taskId}`);
+                triggerNotification("Статус обновлен");
             };
 
-            // Delete Task Node
             const removeTaskFromLedger = (taskId) => {
                 const updated = tasks.filter(t => t.id !== taskId);
                 saveTasks(updated);
-                appendLog(`Рабочая задача ${taskId} удалена оператором`);
-                triggerNotification("Задача стерта из реестра");
+                appendLog(`Задача ${taskId} полностью удалена`);
+                triggerNotification("Задача удалена");
             };
 
             // ------------------------------------------
-            // MODULE: CALENDAR (Replaces Chronos)
+            // MODULE: LUXURY CALENDAR
             // ------------------------------------------
             const [calendarYear, setCalendarYear] = useState(2026);
-            const [calendarMonth, setCalendarMonth] = useState(4); // May
+            const [calendarMonth, setCalendarMonth] = useState(4); 
             const [selectedCalendarDay, setSelectedCalendarDay] = useState(23);
             const [isAddEventOpen, setIsAddEventOpen] = useState(false);
             const [eventTitle, setEventTitle] = useState("");
@@ -577,7 +950,6 @@
                 }
             };
 
-            // Create Event Node
             const handleCreateCalendarEvent = (e) => {
                 e.preventDefault();
                 const title = eventTitle.trim();
@@ -593,16 +965,15 @@
                 setEventTitle("");
                 setEventTime("");
                 setIsAddEventOpen(false);
-                appendLog(`В план занесено событие ${title} на дату ${dateKey}`);
+                appendLog(`Создано событие ${title} на ${dateKey}`);
                 triggerNotification("Событие внесено в расписание");
             };
 
-            // Delete Event Node
             const removeCalendarEvent = (evId) => {
                 const updated = events.filter(e => e.id !== evId);
                 saveEvents(updated);
-                appendLog(`Событие ${evId} удалено из календаря`);
-                triggerNotification("Событие отменено");
+                appendLog(`Событие ${evId} удалено`);
+                triggerNotification("Событие аннулировано");
             };
 
             const checkDayHasActiveEvents = (day) => {
@@ -616,37 +987,22 @@
             };
 
             // ------------------------------------------
-            // MODULE: METRICS (API INTERFACE)
+            // MODULE: SEARCH CONSOLE METRICS
             // ------------------------------------------
             const [metricUrl, setMetricUrl] = useState("");
             const [metricToken, setMetricToken] = useState("");
             const [metricsLoading, setMetricsLoading] = useState(false);
             const [activeMetrics, setActiveMetrics] = useState(null);
 
-            // Fetch live GSC REST API
             const handleFetchLiveMetrics = async (e) => {
                 e.preventDefault();
                 if (!metricUrl || !metricToken) {
-                    triggerNotification("Укажите адрес вебсайта и ваш рабочий токен доступа");
+                    triggerNotification("Заполните все авторизационные поля");
                     return;
                 }
                 setMetricsLoading(true);
                 setActiveMetrics(null);
-                appendLog("Запущен процесс удаленного обмена данными с серверами Google Analytics");
-
-                const retrieveWithRetry = async (url, payload, retryCount = 3, interval = 1500) => {
-                    try {
-                        const response = await fetch(url, payload);
-                        if (!response.ok) throw new Error("Статус соединения " + response.status);
-                        return await response.json();
-                    } catch (err) {
-                        if (retryCount > 0) {
-                            await new Promise(res => setTimeout(res, interval));
-                            return retrieveWithRetry(url, payload, retryCount - 1, interval * 2);
-                        }
-                        throw err;
-                    }
-                };
+                appendLog("Запрос пакета аналитических данных из Google Search Console");
 
                 try {
                     const cleanUrl = metricUrl.trim();
@@ -655,10 +1011,10 @@
                         startDate: "2026-04-01",
                         endDate: "2026-05-20",
                         dimensions: ["query"],
-                        rowLimit: 10
+                        rowLimit: 8
                     };
 
-                    const result = await retrieveWithRetry(liveGscUrl, {
+                    const response = await fetch(liveGscUrl, {
                         method: "POST",
                         headers: {
                             "Authorization": `Bearer ${metricToken.trim()}`,
@@ -666,6 +1022,9 @@
                         },
                         body: JSON.stringify(searchBody)
                     });
+
+                    if (!response.ok) throw new Error("Код ошибки " + response.status);
+                    const result = await response.json();
 
                     if (result && result.rows) {
                         const formatted = result.rows.map(row => ({
@@ -676,22 +1035,21 @@
                             position: Math.round(row.position || 0)
                         }));
                         setActiveMetrics(formatted);
-                        appendLog(`Успешно импортировано ${formatted.length} рабочих поисковых запросов`);
-                        triggerNotification("Аналитические данные обновлены");
+                        appendLog(`Импортировано поисковых запросов ${formatted.length}`);
+                        triggerNotification("Аналитика успешно обновлена");
                     } else {
-                        triggerNotification("Сервер вернул пустой набор данных");
-                        appendLog("Запрос к Google Console выполнен успешно но записи отсутствуют");
+                        triggerNotification("Записи в консоли отсутствуют");
                     }
                 } catch (err) {
-                    appendLog("Сбой установления зашифрованного соединения с Google REST API");
-                    triggerNotification("Ошибка авторизации токена");
+                    appendLog("Сбой авторизации токена при обмене с REST API");
+                    triggerNotification("Ошибка доступа токена");
                 } finally {
                     setMetricsLoading(false);
                 }
             };
 
             // ------------------------------------------
-            // MODULE: CREDENTIAL SAFE
+            // MODULE: SECRET SAFE
             // ------------------------------------------
             const [isAddSafeOpen, setIsAddSafeOpen] = useState(false);
             const [safeService, setSafeService] = useState("");
@@ -700,7 +1058,6 @@
             const [safeNote, setSafeNote] = useState("");
             const [revealedPasswords, setRevealedPasswords] = useState({});
 
-            // Create Safe Node
             const handleCreateSafeEntrySubmit = (e) => {
                 e.preventDefault();
                 const service = safeService.trim();
@@ -718,13 +1075,12 @@
                 setSafePass("");
                 setSafeNote("");
                 setIsAddSafeOpen(false);
-                appendLog(`В криптографический сейф внесена запись ${service}`);
-                triggerNotification("Учетная запись запечатана");
+                appendLog(`В сейф занесена запись ${service}`);
+                triggerNotification("Данные запечатаны");
             };
 
             const toggleRevealPasswordStatus = (id) => {
                 setRevealedPasswords(prev => ({ ...prev, [id]: !prev[id] }));
-                appendLog(`Запрошено раскрытие пароля для записи ${id}`);
             };
 
             const triggerPasswordClipboardCopy = (secretText) => {
@@ -734,77 +1090,80 @@
                 tempField.select();
                 document.execCommand("copy");
                 document.body.removeChild(tempField);
-                triggerNotification("Секретный код скопирован");
-                appendLog("Пароль скопирован в буфер обмена устройства");
+                triggerNotification("Шифр скопирован");
             };
 
-            // Delete Safe Node
             const removeSafeEntry = (itemId) => {
                 const filtered = safe.filter(i => i.id !== itemId);
                 saveSafe(filtered);
-                appendLog(`Запись ${itemId} стерта из зашифрованной базы сейфа`);
+                appendLog(`Из сейфа удалена запись ${itemId}`);
                 triggerNotification("Запись уничтожена");
             };
 
             // ------------------------------------------
-            // RENDERING ROUTING
+            // LOGIN SCREEN INTERFACE (iOS Style)
             // ------------------------------------------
             if (!isAuthenticated) {
                 return (
-                    <div class="min-h-screen flex items-center justify-center p-4 relative z-10">
-                        <div class="w-full max-w-md bg-zinc-950/90 border border-purple-900/40 rounded-3xl p-8 corner-frame flex flex-col items-center relative overflow-hidden">
-                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-40"></div>
+                    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-black">
+                        {/* High-fidelity ambient blur backing */}
+                        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-900/10 rounded-full blur-[140px] pointer-events-none"></div>
+                        <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-red-900/5 rounded-full blur-[120px] pointer-events-none"></div>
+                        
+                        <div className="w-full max-w-[430px] p-10 ios-glass relative flex flex-col items-center">
                             
-                            {/* Gothic Logo Frame */}
-                            <div class="w-20 h-20 mb-6 bg-purple-950/30 border border-purple-500/35 rounded-full flex items-center justify-center text-4xl font-extrabold text-purple-400 select-none shadow-[0_0_20px_rgba(168,85,247,0.25)] gothic-header">
-                                P
+                            {/* Interactive 3D Gothic Core Visualizer */}
+                            <div className="mb-2 -mt-4">
+                                <GothicNeuroKnotCanvas width={180} height={180} />
                             </div>
 
-                            <h1 class="text-3xl font-black text-center tracking-widest text-white uppercase gothic-header mb-1">
-                                PROMT Support
-                            </h1>
-                            <p class="text-[10px] text-purple-400/60 uppercase tracking-[0.2em] mb-8 text-center">
-                                Модуль идентификации оператора системы
-                            </p>
+                            <div className="text-center mb-10 select-none">
+                                <h1 className="text-2xl tracking-[0.2em] font-light text-stone-100 uppercase gothic-title">
+                                    PROMT <span className="text-red-655 luxury-accent font-normal lowercase">&</span> SUPPORT
+                                </h1>
+                                <p className="text-[9px] uppercase tracking-[0.25em] text-stone-500 mt-2.5 font-semibold font-mono">
+                                    Авторизация защищенного сеанса
+                                </p>
+                            </div>
 
-                            <form onSubmit={handleAuthSubmit} class="w-full space-y-6">
+                            <form onSubmit={handleAuthSubmit} className="w-full space-y-6">
                                 <div>
-                                    <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-2">
-                                        Логин доступа
+                                    <label className="block text-[9px] uppercase tracking-[0.18em] text-stone-400 font-bold mb-2 font-mono">
+                                        Имя оператора
                                     </label>
                                     <input 
                                         type="text" 
                                         value={loginInput}
                                         onChange={(e) => setLoginInput(e.target.value)}
                                         required
-                                        class="w-full bg-zinc-950/90 border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-3 px-4 outline-none transition-all text-sm tracking-wider"
+                                        className="w-full bg-black/60 border border-stone-850/80 focus:border-red-900/60 focus:ring-0 text-white rounded-xl py-3 px-4 outline-none transition-all text-xs font-mono tracking-wider"
                                     />
                                 </div>
 
                                 <div>
-                                    <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-2">
-                                        Секретный шифр
+                                    <label className="block text-[9px] uppercase tracking-[0.18em] text-stone-400 font-bold mb-2 font-mono">
+                                        Пароль доступа
                                     </label>
                                     <input 
                                         type="password" 
                                         value={passwordInput}
                                         onChange={(e) => setPasswordInput(e.target.value)}
                                         required
-                                        class="w-full bg-zinc-950/90 border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-3 px-4 outline-none transition-all text-sm tracking-wider"
+                                        className="w-full bg-black/60 border border-stone-850/80 focus:border-red-900/60 focus:ring-0 text-white rounded-xl py-3 px-4 outline-none transition-all text-xs font-mono tracking-wider"
                                     />
                                 </div>
 
                                 {authError && (
-                                    <div class="p-3 bg-red-950/30 border border-red-900/40 text-red-400 text-xs rounded-xl text-center">
+                                    <div className="p-3.5 bg-red-950/20 border border-red-900/30 text-red-400 text-[10px] rounded-xl text-center tracking-wider font-mono">
                                         {authError}
                                     </div>
                                 )}
 
                                 <button 
                                     type="submit" 
-                                    class="w-full py-4 px-6 bg-gradient-to-b from-purple-950/50 to-zinc-950 border border-purple-500/50 hover:border-purple-400 text-purple-300 uppercase tracking-widest text-xs font-semibold rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.3)]"
+                                    className="w-full py-4 px-6 ios-btn-primary text-xs font-bold flex items-center justify-center gap-2"
                                 >
-                                    Установить соединение
+                                    <span>Установить соединение</span>
                                 </button>
                             </form>
                         </div>
@@ -812,37 +1171,38 @@
                 );
             }
 
+            // ------------------------------------------
+            // WORKSPACE VIEWPORT (P2P ENCRYPTED)
+            // ------------------------------------------
             return (
-                <div class="min-h-screen flex flex-col relative z-10 pb-12">
+                <div className="min-h-screen flex flex-col relative pb-12 bg-[#020202]">
                     
-                    {/* Top Global Notification Banner */}
+                    {/* Floating Alert System (Punctuation-free) */}
                     {notification && (
-                        <div class="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-zinc-950/95 border border-purple-500/40 text-purple-300 text-xs tracking-widest uppercase rounded-full shadow-[0_0_30px_rgba(168,85,247,0.3)] transition-all">
-                            {notification}
+                        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-stone-950 border border-stone-800 text-stone-300 text-[10px] tracking-widest uppercase rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.9)] transition-all flex items-center gap-2.5 font-mono">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-650 animate-pulse"></span>
+                            <span>{notification}</span>
                         </div>
                     )}
 
-                    {/* Top Premium Navbar */}
-                    <header class="border-b border-zinc-900/80 bg-black/60 backdrop-blur-md sticky top-0 z-40">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                    {/* Navigation Bar (iOS Squircle inspired) */}
+                    <header className="border-b border-stone-900/50 bg-black/80 backdrop-blur-md sticky top-0 z-40">
+                        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                             
-                            <div class="flex items-center space-x-4">
-                                <div class="w-10 h-10 rounded-lg bg-purple-950/50 border border-purple-500/30 flex items-center justify-center text-lg font-bold text-purple-300 select-none gothic-header">
-                                    P
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="text-base font-bold tracking-widest text-white uppercase gothic-header leading-tight">
-                                        PROMT Support
+                            <div className="flex items-center space-x-4 select-none">
+                                <MonogramBrandLogo className="w-11 h-11" />
+                                <div className="flex flex-col">
+                                    <span className="text-sm font-bold tracking-[0.2em] text-white uppercase gothic-title leading-tight">
+                                        PROMT <span className="text-red-655 luxury-accent font-normal lowercase">&</span> SUPPORT
                                     </span>
-                                    {/* Synchronization Status Dashboard Header */}
-                                    <span class="text-[8px] uppercase tracking-widest text-purple-500/85">
-                                        P2P Облако {syncIndicator}
+                                    <span className="text-[8px] uppercase tracking-[0.2em] text-stone-500 font-bold font-mono">
+                                        Шифрование связи {syncIndicator}
                                     </span>
                                 </div>
                             </div>
 
-                            {/* Navigation Tabs */}
-                            <div class="hidden md:flex items-center space-x-1">
+                            {/* Desktop Tabs */}
+                            <div className="hidden md:flex items-center space-x-1 bg-[#090909] p-1 border border-stone-900/60 rounded-xl">
                                 {[
                                     { id: "storage", label: "Хранилище" },
                                     { id: "tasks", label: "Задачи" },
@@ -853,31 +1213,31 @@
                                     <button 
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id)}
-                                        class={`px-4 py-2 rounded-xl text-xs uppercase tracking-widest font-semibold transition-all ${activeTab === tab.id ? 'bg-purple-950/40 text-purple-300 border border-purple-500/35' : 'text-gray-400 hover:text-white'}`}
+                                        className={`px-4 py-2 text-[10px] uppercase tracking-[0.15em] font-bold rounded-lg transition-all ${activeTab === tab.id ? 'bg-white text-black' : 'text-stone-500 hover:text-stone-300'}`}
                                     >
                                         {tab.label}
                                     </button>
                                 ))}
                             </div>
 
-                            <div class="flex items-center space-x-4">
-                                <div class="hidden sm:flex flex-col items-end">
-                                    <span class="text-[9px] text-purple-400/70 uppercase tracking-widest">Оператор в сети</span>
-                                    <span class="text-xs font-semibold text-white uppercase tracking-wider">{currentUser}</span>
+                            <div className="flex items-center space-x-6">
+                                <div className="hidden sm:flex flex-col items-end font-mono">
+                                    <span className="text-[8px] text-stone-500 uppercase tracking-widest">Оператор</span>
+                                    <span className="text-xs font-semibold text-stone-200 uppercase tracking-wider">{currentUser}</span>
                                 </div>
                                 <button 
                                     onClick={handleLogout}
-                                    class="p-2.5 bg-red-950/20 border border-red-900/30 hover:border-red-500/50 rounded-xl text-red-400 hover:text-red-300 transition-all cursor-pointer"
+                                    className="p-2.5 bg-transparent hover:bg-stone-900 text-stone-500 hover:text-stone-200 rounded-xl border border-stone-900 transition-all cursor-pointer"
                                 >
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                     </svg>
                                 </button>
                             </div>
                         </div>
 
-                        {/* Mobile Navigation Drawer Panel */}
-                        <div class="md:hidden flex justify-around py-3 bg-zinc-950/90 border-t border-zinc-900 px-2 overflow-x-auto">
+                        {/* Mobile Navigation Bar */}
+                        <div className="md:hidden flex justify-around py-3 bg-black border-t border-stone-900 px-2 overflow-x-auto">
                             {[
                                 { id: "storage", label: "Хранилище" },
                                 { id: "tasks", label: "Задачи" },
@@ -888,7 +1248,7 @@
                                 <button 
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id)}
-                                    class={`px-3 py-1.5 rounded-lg text-[10px] uppercase tracking-wider font-bold shrink-0 ${activeTab === tab.id ? 'bg-purple-950/40 text-purple-300 border border-purple-500/20' : 'text-gray-400'}`}
+                                    className={`px-3 py-1.5 text-[9px] uppercase tracking-wider font-bold shrink-0 ${activeTab === tab.id ? 'text-white font-black' : 'text-stone-500'}`}
                                 >
                                     {tab.label}
                                 </button>
@@ -896,27 +1256,70 @@
                         </div>
                     </header>
 
-                    {/* Main Workspace Frame */}
-                    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 flex-grow w-full">
+                    {/* Highly Detailed Interactive Network Topology Map */}
+                    <div className="max-w-7xl mx-auto px-6 w-full mt-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 bg-[#050505] border border-stone-900 p-6 rounded-2xl shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+                            
+                            {/* P2P Active Tunnel visualization (Replaced with HighFidelitySignalMap) */}
+                            <div className="lg:col-span-2 flex flex-col justify-between space-y-4">
+                                <div>
+                                    <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-red-500 font-bold block">Карта активных сетевых соединений</span>
+                                    <span className="text-[10px] text-stone-500 font-light mt-1 block">Децентрализованная маршрутизация трафика между доверенными системами операторов</span>
+                                </div>
+                                
+                                <HighFidelitySignalMap />
+                            </div>
+
+                            {/* Telemetry and metrics panel (Clean iOS layout) */}
+                            <div className="flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-stone-900/60 pt-4 lg:pt-0 lg:pl-6 space-y-3 font-mono text-[9px] uppercase tracking-wider text-stone-500">
+                                <span className="text-[8px] font-bold block text-stone-500">Параметры безопасности</span>
+                                <div className="space-y-2.5">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-stone-650">Спектр криптоядра</span>
+                                        <span className="text-white font-bold">128 бит AES</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-stone-655">Каналы синхронизации</span>
+                                        <span className="text-stone-300 font-bold">GunDB WebRTC</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-stone-655">Задержка обмена</span>
+                                        <span className="text-green-500 font-bold">16 миллисекунд</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-stone-655">Локальный кэш</span>
+                                        <span className="text-stone-300 font-bold">Активен</span>
+                                    </div>
+                                </div>
+                                <div className="pt-2 border-t border-stone-900/40 text-[8px] text-stone-600">
+                                    База данных полностью реплицирована
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {/* Main Workspace Viewport */}
+                    <main className="max-w-7xl mx-auto px-6 mt-8 flex-grow w-full">
                         
                         {/* ------------------------------------------
-                            STORAGE TAB
+                            TAB: STORAGE
                         ------------------------------------------ */}
                         {activeTab === "storage" && (
-                            <div class="space-y-6">
-                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div className="space-y-12 animate-fadeIn duration-500">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                     <div>
-                                        <h2 class="text-2xl font-bold tracking-widest text-white uppercase gothic-header">Хранилище</h2>
+                                        <h2 className="text-3xl font-light tracking-wider text-stone-100 uppercase gothic-title">Хранилище</h2>
                                         
-                                        {/* Breadcrumbs Navigation */}
-                                        <div class="flex items-center space-x-2 mt-2 text-xs text-purple-400/60 uppercase tracking-widest">
-                                            <button onClick={() => setCurrentFolderId(null)} class="hover:text-purple-300">
+                                        {/* Breadcrumbs (Punctuation-free) */}
+                                        <div className="flex items-center space-x-2 mt-2 text-[10px] text-stone-500 uppercase tracking-widest font-mono">
+                                            <button onClick={() => setCurrentFolderId(null)} className="hover:text-stone-300">
                                                 Корень
                                             </button>
                                             {getBreadcrumbs().map((crumb) => (
                                                 <React.Fragment key={crumb.id}>
-                                                    <span>/</span>
-                                                    <button onClick={() => setCurrentFolderId(crumb.id)} class="hover:text-purple-300">
+                                                    <span> </span>
+                                                    <button onClick={() => setCurrentFolderId(crumb.id)} className="hover:text-stone-300">
                                                         {crumb.name}
                                                     </button>
                                                 </React.Fragment>
@@ -924,24 +1327,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex items-center space-x-3">
+                                    <div className="flex items-center space-x-3">
                                         <button 
                                             onClick={() => setIsAddFolderOpen(true)}
-                                            class="py-2.5 px-4 bg-zinc-950 border border-purple-500/30 text-purple-300 rounded-xl text-xs uppercase tracking-widest font-semibold hover:border-purple-400 transition-all flex items-center space-x-2"
+                                            className="py-2.5 px-4 bg-transparent hover:bg-[#070707] border border-stone-850 text-stone-300 rounded-xl text-xs uppercase tracking-widest font-semibold transition-all flex items-center space-x-2"
                                         >
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V4a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                                            </svg>
                                             <span>Создать каталог</span>
                                         </button>
                                         
                                         <button 
                                             onClick={() => fileInputRef.current.click()}
-                                            class="py-2.5 px-4 bg-purple-950/40 border border-purple-500/50 text-purple-300 rounded-xl text-xs uppercase tracking-widest font-semibold hover:border-purple-400 transition-all flex items-center space-x-2 shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+                                            className="py-2.5 px-4 bg-white hover:bg-stone-200 text-black rounded-xl text-xs uppercase tracking-widest font-bold transition-all flex items-center space-x-2 shadow-lg"
                                         >
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                            </svg>
                                             <span>Импорт файлов</span>
                                         </button>
                                         <input 
@@ -951,63 +1348,55 @@
                                             onChange={(e) => {
                                                 if (e.target.files) handleFileDropUpload(e.target.files);
                                             }} 
-                                            class="hidden" 
+                                            className="hidden" 
                                         />
                                     </div>
                                 </div>
 
-                                {/* Drag and Drop Portal Container */}
+                                {/* Drag and Drop Portal Area with Laser scanning overlay */}
                                 <div 
                                     onDragOver={handleDragOverArea}
                                     onDragLeave={handleDragLeaveArea}
                                     onDrop={handleDropArea}
-                                    class={`border-2 border-dashed rounded-3xl p-8 transition-all flex flex-col items-center justify-center min-h-[350px] ${isDragging ? 'border-purple-400 bg-purple-950/10' : 'border-zinc-800/80 bg-black/40'}`}
+                                    className={`border border-dashed rounded-2xl p-10 transition-all flex flex-col items-center justify-center min-h-[300px] relative overflow-hidden ${isDragging ? 'border-red-600 bg-red-950/5' : 'border-stone-900 bg-[#040404]/30'}`}
                                 >
+                                    {isDragging && <div className="laser-line"></div>}
                                     {folders.filter(f => f.parentId === currentFolderId).length === 0 && 
                                      files.filter(f => f.parentId === currentFolderId).length === 0 ? (
-                                        <div class="text-center space-y-4">
-                                            <div class="w-16 h-16 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-600 mx-auto">
-                                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5M5 19v-11M21 12H12" />
-                                                </svg>
-                                            </div>
-                                            <p class="text-xs uppercase tracking-widest text-purple-300/60">
+                                        <div className="text-center space-y-4 select-none">
+                                            <p className="text-xs uppercase tracking-[0.2em] text-stone-500">
                                                 Перенесите внешние папки и файлы компьютера сюда
                                             </p>
-                                            <p class="text-[10px] uppercase tracking-wider text-zinc-600">
+                                            <p className="text-[9px] uppercase tracking-wider text-stone-600 font-mono">
                                                 Автоматическое считывание структуры каталогов на лету
                                             </p>
                                         </div>
                                     ) : (
-                                        <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
                                             
-                                            {/* Subfolders Grid */}
+                                            {/* Render Folders */}
                                             {folders.filter(f => f.parentId === currentFolderId).map(folder => (
                                                 <div 
                                                     key={folder.id}
                                                     onClick={() => setCurrentFolderId(folder.id)}
-                                                    class="p-4 bg-zinc-950/80 border border-zinc-900 rounded-2xl flex items-center justify-between hover:border-purple-500/40 cursor-pointer transition-all corner-frame select-none"
+                                                    className="p-5 ios-glass rounded-xl flex items-center justify-between select-none cursor-pointer"
                                                 >
-                                                    <div class="flex items-center space-x-3 overflow-hidden">
-                                                        <svg class="w-6 h-6 text-purple-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
-                                                        </svg>
-                                                        <span class="text-xs uppercase tracking-wider truncate font-semibold text-gray-200">
+                                                    <div className="flex items-center space-x-3.5 overflow-hidden">
+                                                        <span className="text-red-655 text-lg">📁</span>
+                                                        <span className="text-xs uppercase tracking-wider truncate font-semibold text-stone-200">
                                                             {folder.name}
                                                         </span>
                                                     </div>
                                                     <button 
                                                         onClick={(e) => deleteFolderRecursively(folder.id, e)}
-                                                        class="p-1 text-red-400 hover:text-red-350 transition-all ml-2 hover:bg-red-950/20 rounded-lg shrink-0"
+                                                        className="p-1 text-stone-500 hover:text-red-500 transition-all ml-2 rounded shrink-0 font-bold"
                                                     >
-                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                        </svg>
+                                                        ✕
                                                     </button>
                                                 </div>
                                             ))}
 
-                                            {/* Files Grid */}
+                                            {/* Render Files */}
                                             {files.filter(f => f.parentId === currentFolderId).map(file => (
                                                 <div 
                                                     key={file.id}
@@ -1019,39 +1408,33 @@
                                                             triggerNotification("Просмотр данного формата файлов не поддерживается");
                                                         }
                                                     }}
-                                                    class="p-4 bg-zinc-950/40 border border-zinc-900/60 rounded-2xl flex flex-col justify-between hover:border-purple-500/40 cursor-pointer transition-all corner-frame"
+                                                    className="p-5 ios-glass rounded-xl flex flex-col justify-between cursor-pointer"
                                                 >
-                                                    <div class="flex items-start justify-between">
-                                                        <div class="flex items-center space-x-3 overflow-hidden">
-                                                            <svg class="w-6 h-6 text-zinc-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                                            </svg>
-                                                            <div class="overflow-hidden">
-                                                                <p class="text-xs font-semibold truncate text-gray-300">
+                                                    <div className="flex items-start justify-between">
+                                                        <div className="flex items-center space-x-3.5 overflow-hidden">
+                                                            <span className="text-stone-500 text-lg">📄</span>
+                                                            <div className="overflow-hidden">
+                                                                <p className="text-xs font-semibold truncate text-stone-200 font-mono">
                                                                     {file.name}
                                                                 </p>
-                                                                <p class="text-[9px] text-zinc-500 uppercase tracking-widest mt-0.5">
-                                                                    Размер {file.size}
+                                                                <p className="text-[9px] text-stone-500 uppercase tracking-widest mt-1 font-mono">
+                                                                    {file.size}
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         
                                                         <button 
                                                             onClick={(e) => deleteIndividualFile(file.id, file.name, e)}
-                                                            class="p-1 text-red-400 hover:text-red-350 transition-all shrink-0 hover:bg-red-950/20 rounded-lg"
+                                                            className="p-1 text-stone-500 hover:text-red-500 transition-all shrink-0 font-bold"
                                                         >
-                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                            </svg>
+                                                            ✕
                                                         </button>
                                                     </div>
                                                     
                                                     {file.content !== undefined && (
-                                                        <div class="mt-4 pt-2 border-t border-zinc-900/60 flex items-center justify-between text-[10px] text-purple-400/70 uppercase tracking-widest">
+                                                        <div className="mt-4 pt-3 border-t border-stone-900/40 flex items-center justify-between text-[8px] text-red-500/70 uppercase tracking-widest font-mono">
                                                             <span>Совместный Текст</span>
-                                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                                            </svg>
+                                                            <span>Редактор</span>
                                                         </div>
                                                     )}
                                                 </div>
@@ -1064,73 +1447,75 @@
                         )}
 
                         {/* ------------------------------------------
-                            TASKS TAB (KANBAN SYSTEM)
+                            TAB: TASKS
                         ------------------------------------------ */}
                         {activeTab === "tasks" && (
-                            <div class="space-y-6">
-                                <div class="flex items-center justify-between">
+                            <div className="space-y-8 animate-fadeIn duration-500">
+                                <div className="flex items-center justify-between pb-4 border-b border-stone-900/40">
                                     <div>
-                                        <h2 class="text-2xl font-bold tracking-widest text-white uppercase gothic-header">Задачи</h2>
-                                        <p class="text-xs text-purple-400/60 uppercase tracking-widest mt-1">
+                                        <h2 className="text-3xl font-light tracking-wider text-stone-100 uppercase gothic-title">Задачи</h2>
+                                        <p className="text-xs text-stone-500 uppercase tracking-widest mt-1.5 font-mono">
                                             Оперативное управление совместными проектами
                                         </p>
                                     </div>
                                     <button 
                                         onClick={() => setIsAddTaskOpen(true)}
-                                        class="py-2.5 px-4 bg-purple-950/40 border border-purple-500/50 text-purple-300 rounded-xl text-xs uppercase tracking-widest font-semibold hover:border-purple-400 transition-all flex items-center space-x-2 shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+                                        className="py-2.5 px-4 bg-white hover:bg-stone-200 text-black rounded-xl text-xs uppercase tracking-widest font-bold transition-all shadow-lg"
                                     >
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                        </svg>
-                                        <span>Добавить задачу</span>
+                                        <span>Добавить задача</span>
                                     </button>
                                 </div>
 
-                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                     
-                                    {/* COLUMN GENERATOR HELPER */}
                                     {[
                                         { id: "todo", title: "Запланировано", target: "progress", label: "В работу" },
                                         { id: "progress", title: "В работе", target: "done", label: "Выполнено" },
                                         { id: "done", title: "Выполнено", target: "todo", label: "Вернуть" }
                                     ].map(col => (
-                                        <div key={col.id} class="bg-black/40 border border-zinc-900/80 p-6 rounded-3xl space-y-4 relative corner-frame">
-                                            <div class="flex items-center justify-between pb-2 border-b border-zinc-900/60">
-                                                <span class="text-xs font-black tracking-widest text-purple-400 uppercase">
+                                        <div key={col.id} className="ios-glass p-6 rounded-2xl space-y-4">
+                                            <div className="flex items-center justify-between pb-3 border-b border-stone-900/50">
+                                                <span className="text-xs font-bold tracking-widest text-white uppercase">
                                                     {col.title}
                                                 </span>
-                                                <span class="px-2 py-0.5 bg-purple-950/50 border border-purple-500/20 text-purple-300 text-[10px] font-bold rounded-lg">
+                                                <span className="px-2 py-0.5 bg-black border border-stone-800 text-stone-400 text-[9px] font-mono rounded">
                                                     {tasks.filter(t => t.status === col.id).length}
                                                 </span>
                                             </div>
                                             
-                                            <div class="space-y-4 overflow-y-auto max-h-[600px] pr-1">
-                                                {tasks.filter(t => t.status === col.id).map(task => (
-                                                    <div key={task.id} class="p-4 bg-zinc-950/70 border border-zinc-900 rounded-2xl space-y-3 relative">
-                                                        <div>
-                                                            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-200">{task.title}</h4>
-                                                            <p class="text-[11px] text-zinc-500 mt-1 font-light leading-relaxed">{task.description}</p>
-                                                        </div>
-                                                        <div class="flex items-center justify-between text-[10px] uppercase tracking-widest pt-2 border-t border-zinc-900/60">
-                                                            <span class="text-purple-400 font-bold">{task.assignee}</span>
-                                                            <span class="text-zinc-600">{task.deadline}</span>
-                                                        </div>
-                                                        <div class="flex items-center justify-between gap-2 pt-1">
-                                                            <button 
-                                                                onClick={() => changeTaskStatus(task.id, col.target)}
-                                                                class="text-[9px] uppercase tracking-widest font-bold py-1 px-3 bg-zinc-900 border border-zinc-800 rounded-lg hover:border-purple-500 text-purple-300 transition-all"
-                                                            >
-                                                                {col.label}
-                                                            </button>
-                                                            <button 
-                                                                onClick={() => removeTaskFromLedger(task.id)}
-                                                                class="text-[9px] uppercase tracking-widest font-bold py-1 px-3 bg-red-950/20 hover:bg-red-950/40 border border-red-900/40 rounded-lg text-red-400 transition-all"
-                                                            >
-                                                                Удалить
-                                                            </button>
-                                                        </div>
+                                            <div className="space-y-4 overflow-y-auto max-h-[500px] pr-1 custom-scrollbar">
+                                                {tasks.filter(t => t.status === col.id).length === 0 ? (
+                                                    <div className="text-center py-10 text-[9px] font-mono text-stone-600 uppercase tracking-widest">
+                                                        Нет active-задач в этом секторе
                                                     </div>
-                                                ))}
+                                                ) : (
+                                                    tasks.filter(t => t.status === col.id).map(task => (
+                                                        <div key={task.id} className="p-4 bg-black/40 border border-stone-900 rounded-xl space-y-3 relative">
+                                                            <div>
+                                                                <h4 className="text-xs font-bold uppercase tracking-wider text-stone-200">{task.title}</h4>
+                                                                <p className="text-[10px] text-stone-500 mt-2 font-light leading-relaxed">{task.description}</p>
+                                                            </div>
+                                                            <div className="flex items-center justify-between text-[9px] uppercase tracking-widest pt-2.5 border-t border-stone-900/40 font-mono">
+                                                                <span className="text-red-500 font-bold">{task.assignee}</span>
+                                                                <span className="text-stone-500">{task.deadline}</span>
+                                                            </div>
+                                                            <div className="flex items-center justify-between gap-2 pt-1">
+                                                                <button 
+                                                                    onClick={() => changeTaskStatus(task.id, col.target)}
+                                                                    className="text-[9px] uppercase tracking-widest font-bold py-1 px-3 bg-[#0a0a0a] border border-stone-850 rounded-lg text-stone-300 hover:border-red-900/40 transition-all"
+                                                                >
+                                                                    {col.label}
+                                                                </button>
+                                                                <button 
+                                                                    onClick={() => removeTaskFromLedger(task.id)}
+                                                                    className="text-[9px] uppercase tracking-widest font-bold py-1 px-3 bg-red-950/20 hover:bg-red-950/45 rounded-lg text-red-400 transition-all"
+                                                                >
+                                                                    Удалить
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                )}
                                             </div>
                                         </div>
                                     ))}
@@ -1140,58 +1525,54 @@
                         )}
 
                         {/* ------------------------------------------
-                            CALENDAR TAB
+                            TAB: CALENDAR
                         ------------------------------------------ */}
                         {activeTab === "chronos" && (
-                            <div class="space-y-6">
-                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div className="space-y-8 animate-fadeIn duration-500">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                     <div>
-                                        <h2 class="text-2xl font-bold tracking-widest text-white uppercase gothic-header">Календарь</h2>
-                                        <p class="text-xs text-purple-400/60 uppercase tracking-widest mt-1">
-                                            Единое расписание и дедлайны созвонов
+                                        <h2 className="text-3xl font-light tracking-wider text-stone-100 uppercase gothic-title">Календарь</h2>
+                                        <p className="text-xs text-stone-500 uppercase tracking-widest mt-1.5 font-mono">
+                                            Единое расписание и дедлайны созвонов партнеров
                                         </p>
                                     </div>
                                     
-                                    <div class="flex items-center space-x-4 bg-zinc-950 border border-zinc-800 p-2 rounded-2xl">
+                                    <div className="flex items-center space-x-4 bg-black border border-stone-900 p-2 rounded-xl">
                                         <button 
                                             onClick={() => navigateMonth("prev")}
-                                            class="p-2 text-purple-400 hover:text-purple-300 transition-all cursor-pointer"
+                                            className="p-2 text-stone-400 hover:text-stone-200 transition-all cursor-pointer"
                                         >
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                                            </svg>
+                                            ◀
                                         </button>
-                                        <span class="text-xs font-black tracking-widest text-white uppercase w-32 text-center select-none">
+                                        <span className="text-[10px] font-bold tracking-widest text-white uppercase w-32 text-center select-none font-mono">
                                             {months[calendarMonth]} {calendarYear}
                                         </span>
                                         <button 
                                             onClick={() => navigateMonth("next")}
-                                            class="p-2 text-purple-400 hover:text-purple-300 transition-all cursor-pointer"
+                                            className="p-2 text-stone-400 hover:text-stone-200 transition-all cursor-pointer"
                                         >
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                            </svg>
+                                            ▶
                                         </button>
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                     
                                     {/* Month Day Grid */}
-                                    <div class="lg:col-span-2 bg-black/40 border border-zinc-900 p-6 rounded-3xl corner-frame">
+                                    <div className="lg:col-span-2 ios-glass p-6 rounded-2xl">
                                         
-                                        <div class="grid grid-cols-7 gap-2 mb-4">
+                                        <div className="grid grid-cols-7 gap-2 mb-4">
                                             {weekdays.map(dayName => (
-                                                <div key={dayName} class="text-center text-[10px] font-black uppercase tracking-widest text-purple-400/80 py-1 select-none">
+                                                <div key={dayName} className="text-center text-[10px] font-bold uppercase tracking-widest text-stone-500 py-1 select-none font-mono">
                                                     {dayName}
                                                 </div>
                                             ))}
                                         </div>
 
-                                        <div class="grid grid-cols-7 gap-2">
+                                        <div className="grid grid-cols-7 gap-2">
                                             {/* Padding Cells */}
                                             {Array.from({ length: paddedStartIndex }).map((_, i) => (
-                                                <div key={`empty-${i}`} class="aspect-square bg-transparent rounded-xl"></div>
+                                                <div key={`empty-${i}`} className="aspect-square bg-transparent rounded"></div>
                                             ))}
 
                                             {/* Calendar Days */}
@@ -1203,15 +1584,15 @@
                                                     <div 
                                                         key={`day-${day}`}
                                                         onClick={() => setSelectedCalendarDay(day)}
-                                                        class={`aspect-square rounded-2xl flex flex-col items-center justify-between p-2 cursor-pointer transition-all border relative select-none ${
+                                                        className={`aspect-square rounded-xl flex flex-col items-center justify-between p-2.5 cursor-pointer transition-all border select-none ${
                                                             isSelected 
-                                                            ? 'bg-purple-950/40 border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.25)] text-white font-bold' 
-                                                            : 'bg-zinc-950/40 border-zinc-900/60 hover:border-purple-500/30 text-gray-400 hover:text-white'
+                                                            ? 'bg-red-950/20 border-red-900/50 text-white font-bold' 
+                                                            : 'bg-black/40 border-stone-900 hover:border-stone-800 text-stone-450 hover:text-stone-200'
                                                         }`}
                                                     >
-                                                        <span class="text-xs font-bold">{day}</span>
+                                                        <span className="text-xs font-mono">{day}</span>
                                                         {hasEvent && (
-                                                            <div class="w-2 h-2 rounded-full bg-red-650 mt-1"></div>
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-red-650 animate-pulse mt-1"></div>
                                                         )}
                                                     </div>
                                                 );
@@ -1220,48 +1601,46 @@
                                     </div>
 
                                     {/* Selected Day Agenda Panel */}
-                                    <div class="bg-black/40 border border-zinc-900 p-6 rounded-3xl space-y-6 corner-frame">
-                                        <div class="pb-2 border-b border-zinc-900 flex items-center justify-between">
-                                            <div class="flex flex-col">
-                                                <span class="text-xs font-black tracking-widest text-purple-400 uppercase">
+                                    <div className="ios-glass p-6 rounded-2xl space-y-6">
+                                        <div className="pb-3 border-b border-stone-900 flex items-center justify-between">
+                                            <div className="flex flex-col">
+                                                <span className="text-xs font-bold tracking-widest text-white uppercase">
                                                     События дня
                                                 </span>
-                                                <span class="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">
+                                                <span className="text-[9px] text-stone-500 uppercase tracking-widest mt-1 font-mono">
                                                     {selectedCalendarDay} {months[calendarMonth]}
                                                 </span>
                                             </div>
                                             <button 
                                                 onClick={() => setIsAddEventOpen(true)}
-                                                class="py-1.5 px-3 bg-zinc-950 border border-purple-500/30 text-purple-300 rounded-lg text-[9px] uppercase tracking-widest font-bold hover:border-purple-400 transition-all"
+                                                className="py-1.5 px-3 bg-zinc-900 hover:bg-zinc-850 border border-stone-850 text-stone-300 rounded-lg text-[9px] uppercase tracking-widest font-bold transition-all"
                                             >
                                                 Добавить
                                             </button>
                                         </div>
 
-                                        <div class="space-y-4 max-h-[400px] overflow-y-auto pr-1">
+                                        <div className="space-y-4 max-h-[400px] overflow-y-auto pr-1">
                                             {getEventsForSelectedDay().length === 0 ? (
-                                                <div class="text-center py-8 text-zinc-600 uppercase tracking-widest text-[10px]">
+                                                <div className="text-center py-8 text-stone-600 uppercase tracking-widest text-[9px] font-mono">
                                                     Событий не запланировано
                                                 </div>
                                             ) : (
                                                 getEventsForSelectedDay().map(event => (
-                                                    <div key={event.id} class="p-4 bg-zinc-950 border border-zinc-900 rounded-2xl flex items-center justify-between">
-                                                        <div class="overflow-hidden mr-3">
-                                                            <p class="text-xs font-bold uppercase tracking-wider text-gray-200 truncate">
+                                                    <div key={event.id} className="p-4 bg-black/40 border border-stone-900 rounded-xl flex items-center justify-between">
+                                                        <div className="overflow-hidden mr-3">
+                                                            <p className="text-xs font-bold uppercase tracking-wider text-gray-200 truncate font-mono">
                                                                 {event.title}
                                                             </p>
-                                                            <p class="text-[9px] text-purple-400/80 uppercase tracking-widest mt-1 font-semibold">
+                                                            <p className="text-[9px] text-red-500/80 uppercase tracking-widest mt-1 font-mono font-semibold">
                                                                 Время {event.time}
                                                             </p>
                                                         </div>
                                                         
                                                         <button 
                                                             onClick={() => removeCalendarEvent(event.id)}
-                                                            class="p-1.5 text-red-400 hover:text-red-350 transition-all hover:bg-red-950/20 rounded-lg shrink-0"
+                                                            className="text-red-500 hover:text-red-400 transition-all shrink-0 font-bold"
                                                         >
-                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                            </svg>
+                                                            ✕
                                                         </button>
                                                     </div>
                                                 ))
@@ -1274,30 +1653,30 @@
                         )}
 
                         {/* ------------------------------------------
-                            METRICS TAB
+                            TAB: METRICS
                         ------------------------------------------ */}
                         {activeTab === "metrics" && (
-                            <div class="space-y-6">
-                                <div class="flex items-center justify-between pb-2 border-b border-zinc-900/60">
+                            <div className="space-y-8 animate-fadeIn duration-500">
+                                <div className="flex items-center justify-between pb-4 border-b border-stone-900/40">
                                     <div>
-                                        <h2 class="text-2xl font-bold tracking-widest text-white uppercase gothic-header">Метрики</h2>
-                                        <p class="text-xs text-purple-400/60 uppercase tracking-widest mt-1">
+                                        <h2 className="text-3xl font-light tracking-wider text-stone-100 uppercase gothic-title">Метрики</h2>
+                                        <p className="text-xs text-stone-500 uppercase tracking-widest mt-1.5 font-mono">
                                             Интеграция с Google Search Console REST API
                                         </p>
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                     
-                                    {/* API Configuration Frame */}
-                                    <div class="bg-black/40 border border-zinc-900 p-6 rounded-3xl space-y-6 corner-frame">
-                                        <span class="text-xs font-black tracking-widest text-purple-400 uppercase block pb-2 border-b border-zinc-900/40">
+                                    {/* API Config Frame */}
+                                    <div className="ios-glass p-6 rounded-2xl space-y-6">
+                                        <span className="text-xs font-bold tracking-widest text-white uppercase block pb-2 border-b border-stone-900/40 font-mono">
                                             Конфигурация API
                                         </span>
 
-                                        <form onSubmit={handleFetchLiveMetrics} class="space-y-5">
+                                        <form onSubmit={handleFetchLiveMetrics} className="space-y-5">
                                             <div>
-                                                <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-2">
+                                                <label className="block className-[9px] uppercase tracking-widest text-stone-400 font-bold mb-2 font-mono">
                                                     Адрес ресурса
                                                 </label>
                                                 <input 
@@ -1306,12 +1685,12 @@
                                                     value={metricUrl}
                                                     onChange={(e) => setMetricUrl(e.target.value)}
                                                     required
-                                                    class="w-full bg-zinc-950 border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2.5 px-4 outline-none transition-all text-xs tracking-wider"
+                                                    className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded-xl py-2.5 px-4 outline-none transition-all text-xs font-mono"
                                                 />
                                             </div>
 
                                             <div>
-                                                <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-2">
+                                                <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-2 font-mono">
                                                     Токен доступа OAuth
                                                 </label>
                                                 <input 
@@ -1320,56 +1699,51 @@
                                                     value={metricToken}
                                                     onChange={(e) => setMetricToken(e.target.value)}
                                                     required
-                                                    class="w-full bg-zinc-950 border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2.5 px-4 outline-none transition-all text-xs tracking-wider"
+                                                    className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded-xl py-2.5 px-4 outline-none transition-all text-xs font-mono"
                                                 />
                                             </div>
 
                                             <button 
                                                 type="submit" 
                                                 disabled={metricsLoading}
-                                                class="w-full py-3 px-4 bg-purple-950/40 border border-purple-500/50 hover:border-purple-400 text-purple-300 uppercase tracking-widest text-[10px] font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(168,85,247,0.15)] disabled:opacity-50"
+                                                className="w-full py-3 px-4 bg-white hover:bg-stone-200 text-black uppercase tracking-widest text-[9px] font-bold rounded-xl transition-all shadow-lg disabled:opacity-50"
                                             >
                                                 {metricsLoading ? "Загрузка данных" : "Получить метрики"}
                                             </button>
                                         </form>
 
-                                        <div class="p-4 bg-zinc-950/80 border border-zinc-900 rounded-2xl">
-                                            <p class="text-[10px] uppercase tracking-wider text-zinc-500 leading-relaxed">
+                                        <div className="p-4 bg-black/40 border border-stone-900 rounded-xl">
+                                            <p className="text-[9px] uppercase tracking-wider text-stone-500 leading-relaxed font-mono">
                                                 Инструкция Для синхронизации с консолью необходимо получить временный ключ в песочнице Google OAuth Playground или Google Cloud Console и ввести точный зарегистрированный префикс вашего сайта
                                             </p>
                                         </div>
                                     </div>
 
                                     {/* SVG Analytical Charts */}
-                                    <div class="lg:col-span-2 bg-black/40 border border-zinc-900 p-6 rounded-3xl space-y-6 corner-frame">
-                                        <span class="text-xs font-black tracking-widest text-purple-400 uppercase block pb-2 border-b border-zinc-900/40">
-                                            Мониторинг позиций
+                                    <div className="lg:col-span-2 ios-glass p-6 rounded-2xl space-y-6">
+                                        <span className="text-xs font-bold tracking-widest text-white uppercase block pb-2 border-b border-stone-900/40">
+                                            Мониторинг позиций ресурсов
                                         </span>
 
                                         {!activeMetrics ? (
-                                            <div class="min-h-[300px] flex flex-col items-center justify-center text-center space-y-4">
-                                                <div class="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-700">
-                                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                                    </svg>
-                                                </div>
-                                                <p class="text-xs uppercase tracking-widest text-purple-300/40">
+                                            <div className="min-h-[300px] flex flex-col items-center justify-center text-center space-y-4">
+                                                <p className="text-[10px] uppercase tracking-widest text-stone-600 font-mono">
                                                     Импортируйте настоящие данные для построения графиков
                                                 </p>
                                             </div>
                                         ) : (
-                                            <div class="space-y-6">
+                                            <div className="space-y-6">
                                                 
-                                                <div class="h-44 w-full bg-zinc-950/80 border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between">
-                                                    <span class="text-[9px] uppercase tracking-widest text-purple-400 font-bold">
+                                                <div className="h-44 w-full bg-black/40 border border-stone-900 rounded-xl p-4 flex flex-col justify-between">
+                                                    <span className="text-[8px] uppercase tracking-widest text-red-500 font-bold font-mono">
                                                         Распределение кликов по запросам
                                                     </span>
-                                                    <div class="w-full h-28 relative mt-2">
-                                                        <svg class="w-full h-full" viewBox="0 0 600 120" preserveAspectRatio="none">
+                                                    <div className="w-full h-28 relative mt-2">
+                                                        <svg className="w-full h-full" viewBox="0 0 600 120" preserveAspectRatio="none">
                                                             <defs>
                                                                 <linearGradient id="glowGrad" x1="0" y1="0" x2="0" y2="1">
-                                                                    <stop offset="0%" stop-color="rgb(168, 85, 247)" stop-opacity="0.3" />
-                                                                    <stop offset="100%" stop-color="rgb(168, 85, 247)" stop-opacity="0.0" />
+                                                                    <stop offset="0%" stop-color="#dc2626" stop-opacity="0.25" />
+                                                                    <stop offset="100%" stop-color="#dc2626" stop-opacity="0.0" />
                                                                 </linearGradient>
                                                             </defs>
                                                             <path 
@@ -1379,30 +1753,30 @@
                                                             <path 
                                                                 d={activeMetrics.map((row, idx) => `${idx === 0 ? 'M' : 'L'} ${idx * 80} ${120 - Math.min(row.clicks * 3, 110)}`).join(" ")}
                                                                 fill="none"
-                                                                stroke="rgb(168, 85, 247)"
+                                                                stroke="#dc2626"
                                                                 stroke-width="2"
                                                             />
                                                         </svg>
                                                     </div>
                                                 </div>
 
-                                                <div class="overflow-x-auto">
-                                                    <table class="w-full text-left text-xs uppercase tracking-wider">
+                                                <div className="overflow-x-auto">
+                                                    <table className="w-full text-left text-xs uppercase tracking-wider font-mono">
                                                         <thead>
-                                                            <tr class="border-b border-zinc-900 text-purple-400/80 text-[10px]">
-                                                                <th class="py-3 px-2 font-bold">Поисковый запрос</th>
-                                                                <th class="py-3 px-2 text-right">Клики</th>
-                                                                <th class="py-3 px-2 text-right">Показы</th>
-                                                                <th class="py-3 px-2 text-right">Позиция</th>
+                                                            <tr className="border-b border-stone-900 text-stone-500 text-[9px] font-bold">
+                                                                <th className="py-3 px-2">Поисковый запрос</th>
+                                                                <th className="py-3 px-2 text-right">Клики</th>
+                                                                <th className="py-3 px-2 text-right">Показы</th>
+                                                                <th className="py-3 px-2 text-right">Позиция</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody class="divide-y divide-zinc-900">
+                                                        <tbody className="divide-y divide-stone-900/40">
                                                             {activeMetrics.map((row, index) => (
-                                                                <tr key={index} class="hover:bg-zinc-950/50 transition-all">
-                                                                    <td class="py-3 px-2 font-semibold text-gray-300 truncate max-w-[150px]">{row.query}</td>
-                                                                    <td class="py-3 px-2 text-right text-purple-300">{row.clicks}</td>
-                                                                    <td class="py-3 px-2 text-right text-zinc-400">{row.impressions}</td>
-                                                                    <td class="py-3 px-2 text-right text-zinc-500">{row.position}</td>
+                                                                <tr key={index} className="hover:bg-[#070707] transition-all text-stone-300">
+                                                                    <td className="py-3 px-2 font-semibold text-stone-200 truncate max-w-[150px]">{row.query}</td>
+                                                                    <td className="py-3 px-2 text-right text-red-500">{row.clicks}</td>
+                                                                    <td className="py-3 px-2 text-right text-stone-500">{row.impressions}</td>
+                                                                    <td className="py-3 px-2 text-right text-stone-500">{row.position}</td>
                                                                 </tr>
                                                             ))}
                                                         </tbody>
@@ -1418,81 +1792,76 @@
                         )}
 
                         {/* ------------------------------------------
-                            SAFE TAB
+                            TAB: SAFE
                         ------------------------------------------ */}
                         {activeTab === "safe" && (
-                            <div class="space-y-6">
-                                <div class="flex items-center justify-between">
+                            <div className="space-y-6 animate-fadeIn duration-500">
+                                <div className="flex items-center justify-between border-b border-stone-900/40 pb-4">
                                     <div>
-                                        <h2 class="text-2xl font-bold tracking-widest text-white uppercase gothic-header">Сейф</h2>
-                                        <p class="text-xs text-purple-400/60 uppercase tracking-widest mt-1">
+                                        <h2 className="text-3xl font-light tracking-wider text-stone-100 uppercase gothic-title">Сейф</h2>
+                                        <p className="text-xs text-stone-500 uppercase tracking-widest mt-1.5 font-mono">
                                             Менеджер шифрованных паролей и доступов к API партнеров
                                         </p>
                                     </div>
                                     <button 
                                         onClick={() => setIsAddSafeOpen(true)}
-                                        class="py-2.5 px-4 bg-purple-950/40 border border-purple-500/50 text-purple-300 rounded-xl text-xs uppercase tracking-widest font-semibold hover:border-purple-400 transition-all flex items-center space-x-2 shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+                                        className="py-2.5 px-4 bg-white hover:bg-stone-200 text-black rounded-xl text-xs uppercase tracking-widest font-bold transition-all shadow-lg"
                                     >
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                        </svg>
                                         <span>Добавить запись</span>
                                     </button>
                                 </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {safe.length === 0 ? (
-                                        <div class="md:col-span-2 lg:col-span-3 py-16 text-center text-zinc-600 uppercase tracking-widest text-xs">
+                                        <div className="md:col-span-2 lg:col-span-3 py-16 text-center text-stone-600 uppercase tracking-widest text-[10px] font-mono">
                                             База сейфа пуста
                                         </div>
                                     ) : (
                                         safe.map(item => (
-                                            <div key={item.id} class="bg-zinc-950/80 border border-zinc-900 p-6 rounded-3xl space-y-4 relative corner-frame">
+                                            <div key={item.id} className="ios-glass p-6 rounded-2xl space-y-4">
                                                 
-                                                <div class="flex items-start justify-between">
+                                                <div className="flex items-start justify-between">
                                                     <div>
-                                                        <h4 class="text-xs font-black uppercase tracking-widest text-white">
+                                                        <h4 className="text-xs font-bold uppercase tracking-widest text-white font-mono">
                                                             {item.service}
                                                         </h4>
-                                                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest mt-1">
-                                                            {item.note || "Примечаний нет"}
+                                                        <p className="text-[9px] text-stone-500 uppercase tracking-widest mt-1 font-mono">
+                                                            {item.note || "Примечания отсутствуют"}
                                                         </p>
                                                     </div>
                                                     
                                                     <button 
                                                         onClick={() => removeSafeEntry(item.id)}
-                                                        class="p-1.5 text-red-400 hover:text-red-350 hover:bg-red-950/20 rounded-lg transition-all"
+                                                        className="p-1 text-stone-500 hover:text-red-500 transition-all rounded font-bold"
                                                     >
-                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                        </svg>
+                                                        ✕
                                                     </button>
                                                 </div>
 
-                                                <div class="p-4 bg-black/60 border border-zinc-900/60 rounded-2xl space-y-3">
-                                                    <div class="flex items-center justify-between text-xs">
-                                                        <span class="text-zinc-500 uppercase tracking-widest text-[9px]">Логин</span>
-                                                        <span class="text-gray-300 font-semibold">{item.login}</span>
+                                                <div className="p-4 bg-black/60 border border-stone-900/60 rounded-xl space-y-3 font-mono">
+                                                    <div className="flex items-center justify-between text-xs">
+                                                        <span className="text-stone-500 uppercase tracking-widest text-[8px]">Логин</span>
+                                                        <span className="text-stone-300 font-semibold">{item.login}</span>
                                                     </div>
                                                     
-                                                    <div class="flex items-center justify-between text-xs pt-2 border-t border-zinc-900/40">
-                                                        <span class="text-zinc-500 uppercase tracking-widest text-[9px]">Пароль</span>
-                                                        <span class="text-purple-300 font-mono tracking-wider font-semibold">
+                                                    <div className="flex items-center justify-between text-xs pt-2 border-t border-stone-900/40">
+                                                        <span className="text-stone-500 uppercase tracking-widest text-[8px]">Пароль</span>
+                                                        <span className="text-stone-300 font-mono tracking-wider font-semibold">
                                                             {revealedPasswords[item.id] ? item.password : "••••••••"}
                                                         </span>
                                                     </div>
                                                 </div>
 
-                                                <div class="flex items-center justify-end gap-2">
+                                                <div className="flex items-center justify-end gap-2">
                                                     <button 
                                                         onClick={() => toggleRevealPasswordStatus(item.id)}
-                                                        class="py-1.5 px-3 bg-zinc-900 border border-zinc-800 hover:border-purple-500/50 rounded-xl text-[9px] uppercase tracking-widest font-bold text-gray-400 hover:text-white transition-all"
+                                                        className="py-1.5 px-3 bg-zinc-900 border border-stone-850 hover:border-stone-750 rounded-xl text-[9px] uppercase tracking-widest font-bold text-stone-400 hover:text-white transition-all font-mono"
                                                     >
                                                         {revealedPasswords[item.id] ? "Скрыть" : "Показать"}
                                                     </button>
                                                     <button 
                                                         onClick={() => triggerPasswordClipboardCopy(item.password)}
-                                                        class="py-1.5 px-3 bg-purple-950/40 border border-purple-500/30 hover:border-purple-500 rounded-xl text-[9px] uppercase tracking-widest font-bold text-purple-300 transition-all shadow-[0_0_10px_rgba(168,85,247,0.1)]"
+                                                        className="py-1.5 px-3 bg-white hover:bg-stone-200 text-black rounded-xl text-[9px] uppercase tracking-widest font-bold transition-all shadow font-mono"
                                                     >
                                                         Копировать
                                                     </button>
@@ -1506,20 +1875,20 @@
                         )}
 
                         {/* ------------------------------------------
-                            TERMINAL LIVE OPERATIONS PANEL
+                            TERMINAL CONSOLE (Punctuation-free Russian)
                         ------------------------------------------ */}
-                        <section class="mt-12 bg-black/85 border border-zinc-900 p-6 rounded-3xl relative overflow-hidden corner-frame">
-                            <div class="flex items-center space-x-2 pb-3 border-b border-zinc-900/60 mb-4">
-                                <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
-                                <span class="text-xs font-black tracking-widest text-purple-400 uppercase">
-                                    Системный протокол событий
+                        <section className="mt-16 bg-[#040404]/80 border border-stone-900 p-6 rounded-2xl relative overflow-hidden">
+                            <div className="flex items-center space-x-2 pb-3 border-b border-stone-900/50 mb-4">
+                                <span className="w-1.5 h-1.5 rounded-full bg-red-650 animate-pulse"></span>
+                                <span className="text-[10px] font-bold tracking-widest text-stone-500 uppercase font-mono">
+                                    Системный протокол событий безопасности
                                 </span>
                             </div>
-                            <div class="space-y-2 max-h-36 overflow-y-auto pr-2">
+                            <div className="space-y-2 max-h-32 overflow-y-auto pr-2 font-mono">
                                 {operationLogs.map(log => (
-                                    <div key={log.id} class="text-[11px] leading-relaxed flex items-start space-x-3 text-zinc-400">
-                                        <span class="text-purple-500 font-medium shrink-0">[{log.time}]</span>
-                                        <span>{log.event}</span>
+                                    <div key={log.id} className="text-[10px] leading-relaxed flex items-start space-x-3 text-stone-500">
+                                        <span className="text-red-655 font-medium shrink-0">[{log.time}]</span>
+                                        <span className="text-stone-400">{log.event}</span>
                                     </div>
                                 ))}
                             </div>
@@ -1527,25 +1896,25 @@
 
                     </main>
 
-                    {/* Footer block with zero punctuation */}
-                    <footer class="mt-20 border-t border-zinc-900/60 py-6 text-center text-[10px] text-zinc-600 uppercase tracking-widest">
+                    {/* Footer */}
+                    <footer className="mt-24 border-t border-stone-900/40 py-8 text-center text-[9px] text-stone-655 uppercase tracking-widest font-mono select-none">
                         Система PROMT Support Безопасная сессия
                     </footer>
 
                     {/* ------------------------------------------
-                        MODALS & DIALOGS (Zero punctuation)
+                        MODALS & FORMS (iOS Styles)
                     ------------------------------------------ */}
                     
                     {/* Add Folder Modal */}
                     {isAddFolderOpen && (
-                        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                            <div class="bg-zinc-950 border border-purple-500/30 p-6 rounded-3xl w-full max-w-sm gothic-glow space-y-6 relative">
-                                <span class="text-xs font-black tracking-widest text-purple-400 uppercase block pb-2 border-b border-zinc-900">
+                        <div className="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                            <div className="ios-glass p-6 rounded-2xl w-full max-w-sm space-y-6 relative">
+                                <span className="text-xs font-bold tracking-widest text-white uppercase block pb-2 border-b border-stone-900 font-mono">
                                     Создать каталог
                                 </span>
-                                <form onSubmit={handleCreateFolder} class="space-y-5">
+                                <form onSubmit={handleCreateFolder} className="space-y-5">
                                     <div>
-                                        <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-2">
+                                        <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-2 font-mono">
                                             Имя нового каталога
                                         </label>
                                         <input 
@@ -1553,23 +1922,23 @@
                                             value={newFolderName}
                                             onChange={(e) => setNewFolderName(e.target.value)}
                                             required
-                                            class="w-full bg-black border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2.5 px-4 outline-none transition-all text-xs tracking-wider"
+                                            className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded-xl py-2.5 px-4 outline-none transition-all text-xs font-mono"
                                         />
                                     </div>
-                                    <div class="flex items-center justify-end gap-3 pt-2">
+                                    <div className="flex items-center justify-end gap-3 pt-2 font-mono">
                                         <button 
                                             type="button" 
                                             onClick={() => {
                                                 setIsAddFolderOpen(false);
                                                 setNewFolderName("");
                                             }}
-                                            class="py-2 px-4 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-xl text-[10px] uppercase tracking-widest font-bold text-gray-400 hover:text-white transition-all"
+                                            className="py-2 px-4 bg-zinc-900 hover:bg-zinc-800 rounded-xl text-[10px] uppercase tracking-widest font-bold text-stone-400 hover:text-white transition-all"
                                         >
                                             Отмена
                                         </button>
                                         <button 
                                             type="submit" 
-                                            class="py-2 px-4 bg-purple-950/40 border border-purple-500/50 hover:border-purple-400 rounded-xl text-[10px] uppercase tracking-widest font-bold text-purple-300 transition-all"
+                                            className="py-2 px-4 bg-white hover:bg-stone-200 text-black rounded-xl text-[10px] uppercase tracking-widest font-bold transition-all"
                                         >
                                             Создать
                                         </button>
@@ -1579,42 +1948,42 @@
                         </div>
                     )}
 
-                    {/* Text Editor Modal */}
+                    {/* Text Document Editor Modal */}
                     {editingFile && (
-                        <div class="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center p-4">
-                            <div class="bg-zinc-950 border border-purple-500/45 p-6 rounded-3xl w-full max-w-2xl h-[80vh] flex flex-col justify-between gothic-glow relative">
-                                <div class="space-y-2 pb-3 border-b border-zinc-900">
-                                    <span class="text-xs font-black tracking-widest text-purple-400 uppercase block">
+                        <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+                            <div className="ios-glass p-6 rounded-2xl w-full max-w-2xl h-[80vh] flex flex-col justify-between relative">
+                                <div className="space-y-2 pb-3 border-b border-stone-900 font-mono">
+                                    <span className="text-xs font-bold tracking-widest text-white uppercase block">
                                         Редактирование документа
                                     </span>
-                                    <span class="text-[10px] text-zinc-500 uppercase tracking-widest block">
+                                    <span className="text-[9px] text-stone-500 uppercase tracking-widest block font-mono">
                                         Файл {editingFile.name}
                                     </span>
                                 </div>
                                 
-                                <div class="flex-grow my-4">
+                                <div className="flex-grow my-4">
                                     <textarea 
                                         value={editingFileContent}
                                         onChange={(e) => setEditingFileContent(e.target.value)}
-                                        class="w-full h-full bg-black border border-zinc-900 focus:border-purple-500 text-gray-200 rounded-2xl p-4 font-mono text-xs tracking-wider outline-none resize-none leading-relaxed"
+                                        className="w-full h-full bg-black border border-red-900/40 text-stone-200 rounded-xl p-4 font-mono text-xs tracking-wider outline-none resize-none leading-relaxed"
                                     ></textarea>
                                 </div>
 
-                                <div class="flex items-center justify-end gap-3 pt-3 border-t border-zinc-900/60">
+                                <div className="flex items-center justify-end gap-3 pt-3 border-t border-stone-900/40 font-mono">
                                     <button 
                                         type="button" 
                                         onClick={() => {
                                             setEditingFile(null);
                                             setEditingFileContent("");
                                         }}
-                                        class="py-2 px-4 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-xl text-[10px] uppercase tracking-widest font-bold text-gray-400 hover:text-white transition-all"
+                                        className="py-2 px-4 bg-zinc-900 hover:bg-zinc-800 rounded-xl text-[10px] uppercase tracking-widest font-bold text-stone-455 hover:text-white transition-all"
                                     >
                                         Закрыть
                                     </button>
                                     <button 
                                         type="button" 
                                         onClick={handleSaveEditedContent}
-                                        class="py-2 px-4 bg-purple-950/40 border border-purple-500/50 hover:border-purple-400 rounded-xl text-[10px] uppercase tracking-widest font-bold text-purple-300 transition-all shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+                                        className="py-2 px-4 bg-white hover:bg-stone-200 text-black rounded-xl text-[10px] uppercase tracking-widest font-bold transition-all shadow-lg"
                                     >
                                         Сохранить изменения
                                     </button>
@@ -1625,14 +1994,14 @@
 
                     {/* Add Task Modal */}
                     {isAddTaskOpen && (
-                        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                            <div class="bg-zinc-950 border border-purple-500/30 p-6 rounded-3xl w-full max-w-sm gothic-glow space-y-5 relative">
-                                <span class="text-xs font-black tracking-widest text-purple-400 uppercase block pb-2 border-b border-zinc-900">
+                        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                            <div className="ios-glass p-6 rounded-2xl w-full max-w-sm space-y-5 relative">
+                                <span className="text-xs font-bold tracking-widest text-white uppercase block pb-2 border-b border-stone-900 font-mono">
                                     Новая рабочая задача
                                 </span>
-                                <form onSubmit={handleCreateTaskSubmit} class="space-y-4">
+                                <form onSubmit={handleCreateTaskSubmit} className="space-y-4">
                                     <div>
-                                        <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-1.5">
+                                        <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-1.5 font-mono">
                                             Суть задачи
                                         </label>
                                         <input 
@@ -1640,37 +2009,37 @@
                                             value={taskTitle}
                                             onChange={(e) => setTaskTitle(e.target.value)}
                                             required
-                                            class="w-full bg-black border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2 px-4 outline-none transition-all text-xs tracking-wider"
+                                            className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded-xl py-2 px-4 outline-none transition-all text-xs font-mono"
                                         />
                                     </div>
 
                                     <div>
-                                        <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-1.5">
+                                        <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-1.5 font-mono">
                                             Спецификация
                                         </label>
                                         <textarea 
                                             value={taskDesc}
                                             onChange={(e) => setTaskDesc(e.target.value)}
-                                            class="w-full bg-black border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2 px-4 outline-none transition-all text-xs tracking-wider h-20 resize-none"
+                                            className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded-xl py-2 px-4 outline-none transition-all text-xs h-20 resize-none font-mono"
                                         ></textarea>
                                     </div>
 
-                                    <div class="grid grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-2 gap-4 font-mono">
                                         <div>
-                                            <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-1.5">
+                                            <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-1.5">
                                                 Исполнитель
                                             </label>
                                             <select 
                                                 value={taskAssignee}
                                                 onChange={(e) => setTaskAssignee(e.target.value)}
-                                                class="w-full bg-black border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2 px-3 outline-none transition-all text-xs tracking-wider uppercase font-bold"
+                                                className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded-xl py-2 px-3 outline-none transition-all text-xs uppercase font-bold"
                                             >
                                                 <option value="asya">asya</option>
                                                 <option value="sasha">sasha</option>
                                             </select>
                                         </div>
                                         <div>
-                                            <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-1.5">
+                                            <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-1.5">
                                                 Срок
                                             </label>
                                             <input 
@@ -1678,12 +2047,12 @@
                                                 placeholder="23 мая"
                                                 value={taskDeadline}
                                                 onChange={(e) => setTaskDeadline(e.target.value)}
-                                                class="w-full bg-black border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2 px-4 outline-none transition-all text-xs tracking-wider"
+                                                className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded-xl py-2 px-4 outline-none transition-all text-xs"
                                             />
                                         </div>
                                     </div>
 
-                                    <div class="flex items-center justify-end gap-3 pt-3 border-t border-zinc-900">
+                                    <div className="flex items-center justify-end gap-3 pt-3 border-t border-stone-900 font-mono">
                                         <button 
                                             type="button" 
                                             onClick={() => {
@@ -1691,13 +2060,13 @@
                                                 setTaskTitle("");
                                                 setTaskDesc("");
                                             }}
-                                            class="py-2 px-4 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-xl text-[10px] uppercase tracking-widest font-bold text-gray-400 hover:text-white transition-all"
+                                            className="py-2 px-4 bg-zinc-900 hover:bg-zinc-800 rounded-xl text-[10px] uppercase tracking-widest font-bold text-stone-400 hover:text-white transition-all"
                                         >
                                             Отмена
                                         </button>
                                         <button 
                                             type="submit" 
-                                            class="py-2 px-4 bg-purple-950/40 border border-purple-500/50 hover:border-purple-400 rounded-xl text-[10px] uppercase tracking-widest font-bold text-purple-300 transition-all"
+                                            className="py-2 px-4 bg-white hover:bg-stone-200 text-black rounded-xl text-[10px] uppercase tracking-widest font-bold transition-all"
                                         >
                                             Добавить
                                         </button>
@@ -1709,14 +2078,14 @@
 
                     {/* Add Event Modal */}
                     {isAddEventOpen && (
-                        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                            <div class="bg-zinc-950 border border-purple-500/30 p-6 rounded-3xl w-full max-w-sm gothic-glow space-y-5 relative">
-                                <span class="text-xs font-black tracking-widest text-purple-400 uppercase block pb-2 border-b border-zinc-900">
+                        <div className="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                            <div className="ios-glass p-6 rounded-2xl w-full max-w-sm space-y-5 relative">
+                                <span className="text-xs font-bold tracking-widest text-white uppercase block pb-2 border-b border-stone-900 font-mono">
                                     Новое событие
                                 </span>
-                                <form onSubmit={handleCreateCalendarEvent} class="space-y-4">
+                                <form onSubmit={handleCreateCalendarEvent} className="space-y-4">
                                     <div>
-                                        <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-1.5">
+                                        <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-1.5 font-mono">
                                             Название события
                                         </label>
                                         <input 
@@ -1724,12 +2093,12 @@
                                             value={eventTitle}
                                             onChange={(e) => setEventTitle(e.target.value)}
                                             required
-                                            class="w-full bg-black border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2 px-4 outline-none transition-all text-xs tracking-wider"
+                                            className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded-xl py-2 px-4 outline-none transition-all text-xs font-mono"
                                         />
                                     </div>
 
                                     <div>
-                                        <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-1.5">
+                                        <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-1.5 font-mono">
                                             Время созвона
                                         </label>
                                         <input 
@@ -1737,11 +2106,11 @@
                                             placeholder="14 00"
                                             value={eventTime}
                                             onChange={(e) => setEventTime(e.target.value)}
-                                            class="w-full bg-black border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2 px-4 outline-none transition-all text-xs tracking-wider"
+                                            className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded-xl py-2 px-4 outline-none transition-all text-xs font-mono"
                                         />
                                     </div>
 
-                                    <div class="flex items-center justify-end gap-3 pt-3 border-t border-zinc-900">
+                                    <div className="flex items-center justify-end gap-3 pt-3 border-t border-stone-900 font-mono">
                                         <button 
                                             type="button" 
                                             onClick={() => {
@@ -1749,13 +2118,13 @@
                                                 setEventTitle("");
                                                 setEventTime("");
                                             }}
-                                            class="py-2 px-4 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-xl text-[10px] uppercase tracking-widest font-bold text-gray-400 hover:text-white transition-all"
+                                            className="py-2 px-4 bg-zinc-900 hover:bg-zinc-850 rounded-xl text-[10px] uppercase tracking-widest font-bold text-stone-450 hover:text-white transition-all"
                                         >
                                             Отмена
                                         </button>
                                         <button 
                                             type="submit" 
-                                            class="py-2 px-4 bg-purple-950/40 border border-purple-500/50 hover:border-purple-400 rounded-xl text-[10px] uppercase tracking-widest font-bold text-purple-300 transition-all"
+                                            className="py-2 px-4 bg-white hover:bg-stone-200 text-black rounded-xl text-[10px] uppercase tracking-widest font-bold transition-all"
                                         >
                                             Добавить
                                         </button>
@@ -1767,14 +2136,14 @@
 
                     {/* Add Safe Entry Modal */}
                     {isAddSafeOpen && (
-                        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                            <div class="bg-zinc-950 border border-purple-500/30 p-6 rounded-3xl w-full max-w-sm gothic-glow space-y-4 relative">
-                                <span class="text-xs font-black tracking-widest text-purple-400 uppercase block pb-2 border-b border-zinc-900">
+                        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                            <div className="ios-glass p-6 rounded-2xl w-full max-w-sm space-y-4 relative">
+                                <span className="text-xs font-bold tracking-widest text-white uppercase block pb-2 border-b border-stone-900 font-mono">
                                     Добавить запись в сейф
                                 </span>
-                                <form onSubmit={handleCreateSafeEntrySubmit} class="space-y-3">
+                                <form onSubmit={handleCreateSafeEntrySubmit} className="space-y-3">
                                     <div>
-                                        <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-1">
+                                        <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-1 font-mono">
                                             Название сервиса
                                         </label>
                                         <input 
@@ -1782,12 +2151,12 @@
                                             value={safeService}
                                             onChange={(e) => setSafeService(e.target.value)}
                                             required
-                                            class="w-full bg-black border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2.5 px-4 outline-none transition-all text-xs tracking-wider"
+                                            className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded py-2.5 px-4 outline-none transition-all text-xs font-mono"
                                         />
                                     </div>
 
                                     <div>
-                                        <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-1">
+                                        <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-1 font-mono">
                                             Идентификатор логин
                                         </label>
                                         <input 
@@ -1795,12 +2164,12 @@
                                             value={safeLogin}
                                             onChange={(e) => setSafeLogin(e.target.value)}
                                             required
-                                            class="w-full bg-black border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2.5 px-4 outline-none transition-all text-xs tracking-wider"
+                                            className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded py-2.5 px-4 outline-none transition-all text-xs font-mono"
                                         />
                                     </div>
 
                                     <div>
-                                        <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-1">
+                                        <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-1 font-mono">
                                             Секретный пароль
                                         </label>
                                         <input 
@@ -1808,23 +2177,23 @@
                                             value={safePass}
                                             onChange={(e) => setSafePass(e.target.value)}
                                             required
-                                            class="w-full bg-black border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2.5 px-4 outline-none transition-all text-xs tracking-wider"
+                                            className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded py-2.5 px-4 outline-none transition-all text-xs font-mono"
                                         />
                                     </div>
 
                                     <div>
-                                        <label class="block text-[10px] uppercase tracking-widest text-purple-300/80 mb-1">
+                                        <label className="block text-[9px] uppercase tracking-widest text-stone-400 font-bold mb-1 font-mono">
                                             Примечания к ключу
                                         </label>
                                         <input 
                                             type="text" 
                                             value={safeNote}
                                             onChange={(e) => setSafeNote(e.target.value)}
-                                            class="w-full bg-black border border-zinc-800 focus:border-purple-500 text-white rounded-xl py-2.5 px-4 outline-none transition-all text-xs tracking-wider"
+                                            className="w-full bg-black border border-stone-900 focus:border-red-900/50 text-white rounded py-2.5 px-4 outline-none transition-all text-xs font-mono"
                                         />
                                     </div>
 
-                                    <div class="flex items-center justify-end gap-3 pt-3 border-t border-zinc-900">
+                                    <div className="flex items-center justify-end gap-3 pt-3 border-t border-stone-900 font-mono">
                                         <button 
                                             type="button" 
                                             onClick={() => {
@@ -1834,13 +2203,13 @@
                                                 setSafePass("");
                                                 setSafeNote("");
                                             }}
-                                            class="py-2 px-4 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-xl text-[10px] uppercase tracking-widest font-bold text-gray-400 hover:text-white transition-all"
+                                            className="py-2 px-4 bg-zinc-900 hover:bg-zinc-800 rounded-xl text-[10px] uppercase tracking-widest font-bold text-stone-400 hover:text-white transition-all"
                                         >
                                             Отмена
                                         </button>
                                         <button 
                                             type="submit" 
-                                            class="py-2 px-4 bg-purple-950/40 border border-purple-500/50 hover:border-purple-400 rounded-xl text-[10px] uppercase tracking-widest font-bold text-purple-300 transition-all"
+                                            className="py-2 px-4 bg-white hover:bg-stone-200 text-black rounded-xl text-[10px] uppercase tracking-widest font-bold transition-all"
                                         >
                                             Запечатать
                                         </button>
